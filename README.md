@@ -37,9 +37,9 @@ alembic/
 tests/
 ```
 
-## Local setup
+## Setup
 
-1. Create and activate a virtual environment.
+1. Create a virtual environment and activate it.
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt

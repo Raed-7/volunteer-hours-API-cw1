@@ -12,7 +12,7 @@ class UserRegister(BaseModel):
 
 class UserLogin(BaseModel):
     email: EmailStr
-    password: str = Field(min_length=1, max_length=128)
+    password: str
 
 
 class UserRead(BaseModel):
