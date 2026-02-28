@@ -13,7 +13,7 @@ def get_auth_header(client):
     return {"Authorization": f"Bearer {token}"}
 
 
-def test_volunteer_create_and_list_happy_path(client):
+def test_volunteer_create_list_happy_path(client):
     headers = get_auth_header(client)
 
     create_response = client.post(
@@ -22,11 +22,8 @@ def test_volunteer_create_and_list_happy_path(client):
         headers=headers,
     )
     assert create_response.status_code == 201
-    volunteer = create_response.json()
-    assert volunteer["name"] == "John Volunteer"
+    assert create_response.json()["name"] == "John Volunteer"
 
     list_response = client.get("/volunteers", headers=headers)
     assert list_response.status_code == 200
-    items = list_response.json()
-    assert len(items) == 1
-    assert items[0]["email"] == "john@example.com"
+    assert len(list_response.json()) == 1

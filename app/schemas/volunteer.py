@@ -5,8 +5,8 @@ class VolunteerBase(BaseModel):
     name: str = Field(
         min_length=2,
         max_length=255,
-        description="Volunteer display name. `full_name` is also accepted as an input alias.",
         validation_alias=AliasChoices("name", "full_name"),
+        description="Volunteer name (accepts input alias: full_name).",
     )
     email: EmailStr
     phone: str | None = Field(default=None, max_length=50)

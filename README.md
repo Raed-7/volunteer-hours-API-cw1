@@ -37,7 +37,7 @@ alembic/
 tests/
 ```
 
-## Local setup (step-by-step)
+## Local setup
 
 1. Create and activate a virtual environment.
 2. Install dependencies:
@@ -48,17 +48,17 @@ tests/
    ```bash
    cp .env.example .env
    ```
-4. Run database migrations **before** starting the API:
+4. Run database migrations before starting the app:
    ```bash
    alembic upgrade head
    ```
-5. Start the development server:
+5. Start the API server:
    ```bash
    uvicorn app.main:app --reload
    ```
-6. Open API docs in browser:
-   - Swagger UI: `http://127.0.0.1:8000/docs`
-   - ReDoc: `http://127.0.0.1:8000/redoc`
+6. Open API docs:
+   - `http://127.0.0.1:8000/docs`
+   - `http://127.0.0.1:8000/redoc`
 
 ## Run tests
 
@@ -68,8 +68,8 @@ pytest -q
 
 ## Field naming note
 
-- Auth uses `full_name` for users (`/auth/register`).
-- Volunteer endpoints primarily use `name`, and now also accept `full_name` as an input alias for compatibility/readability during coursework demos.
+- Auth user payload uses `full_name`.
+- Volunteer payload uses `name`, and also accepts `full_name` as an input alias for compatibility.
 
 ## Notes
 
