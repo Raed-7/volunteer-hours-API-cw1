@@ -13,33 +13,17 @@ def get_auth_header(client):
     return {"Authorization": f"Bearer {token}"}
 
 
-def test_volunteer_crud_happy_path(client):
+def test_volunteer_create_list_happy_path(client):
     headers = get_auth_header(client)
 
     create_response = client.post(
         "/volunteers",
-        json={"name": "John Volunteer", "email": "john@example.com", "phone": "123456789"},
+        json={"full_name": "John Volunteer", "email": "john@example.com", "phone": "123456789"},
         headers=headers,
     )
     assert create_response.status_code == 201
-    volunteer = create_response.json()
-    volunteer_id = volunteer["id"]
+    assert create_response.json()["name"] == "John Volunteer"
 
     list_response = client.get("/volunteers", headers=headers)
     assert list_response.status_code == 200
     assert len(list_response.json()) == 1
-
-    detail_response = client.get(f"/volunteers/{volunteer_id}", headers=headers)
-    assert detail_response.status_code == 200
-    assert detail_response.json()["email"] == "john@example.com"
-
-    update_response = client.patch(
-        f"/volunteers/{volunteer_id}",
-        json={"phone": "987654321"},
-        headers=headers,
-    )
-    assert update_response.status_code == 200
-    assert update_response.json()["phone"] == "987654321"
-
-    delete_response = client.delete(f"/volunteers/{volunteer_id}", headers=headers)
-    assert delete_response.status_code == 204

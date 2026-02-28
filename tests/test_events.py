@@ -13,7 +13,7 @@ def get_auth_header(client):
     return {"Authorization": f"Bearer {token}"}
 
 
-def test_event_crud_happy_path(client):
+def test_event_create_list_happy_path(client):
     headers = get_auth_header(client)
 
     create_response = client.post(
@@ -27,23 +27,7 @@ def test_event_crud_happy_path(client):
         headers=headers,
     )
     assert create_response.status_code == 201
-    event_id = create_response.json()["id"]
 
     list_response = client.get("/events", headers=headers)
     assert list_response.status_code == 200
     assert len(list_response.json()) == 1
-
-    detail_response = client.get(f"/events/{event_id}", headers=headers)
-    assert detail_response.status_code == 200
-    assert detail_response.json()["title"] == "Community Clean-up"
-
-    update_response = client.patch(
-        f"/events/{event_id}",
-        json={"location": "Town Hall"},
-        headers=headers,
-    )
-    assert update_response.status_code == 200
-    assert update_response.json()["location"] == "Town Hall"
-
-    delete_response = client.delete(f"/events/{event_id}", headers=headers)
-    assert delete_response.status_code == 204

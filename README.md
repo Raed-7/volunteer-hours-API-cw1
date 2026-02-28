@@ -44,32 +44,32 @@ tests/
    ```bash
    pip install -r requirements.txt
    ```
-3. Create environment file:
+3. Create your local environment file:
    ```bash
    cp .env.example .env
    ```
-
-## Run migrations
-
-```bash
-alembic upgrade head
-```
-
-## Run the API locally
-
-```bash
-uvicorn app.main:app --reload
-```
-
-API docs available at:
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- ReDoc: `http://127.0.0.1:8000/redoc`
+4. Run database migrations before starting the app:
+   ```bash
+   alembic upgrade head
+   ```
+5. Start the API server:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+6. Open API docs:
+   - `http://127.0.0.1:8000/docs`
+   - `http://127.0.0.1:8000/redoc`
 
 ## Run tests
 
 ```bash
 pytest -q
 ```
+
+## Field naming note
+
+- Auth user payload uses `full_name`.
+- Volunteer payload uses `name`, and also accepts `full_name` as an input alias for compatibility.
 
 ## Notes
 
