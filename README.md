@@ -1,76 +1,76 @@
 # Volunteer Hours Management API
 
-Backend API for managing volunteers, events, shifts, and attendance work logs.
+A coursework-ready backend API for managing volunteers and events. This first milestone includes authentication, role support, and protected CRUD endpoints for volunteers and events.
 
-## Stack
-- FastAPI
+## Tech stack
+
+- Python + FastAPI
 - SQLAlchemy ORM
-- Alembic
-- Pydantic
-- SQLite (local)
-- JWT auth
+- Alembic migrations
+- Pydantic schemas
+- SQLite (local development)
+- JWT authentication
 - Pytest
 
-## Local setup
-1. Create and activate a virtual environment.
+## Features implemented today
+
+- User registration/login/me endpoints
+- JWT-based authentication
+- Role support (`admin`, `organiser`)
+- Protected volunteer CRUD endpoints
+- Protected event CRUD endpoints
+- Alembic initial migration for `users`, `volunteers`, `events`
+
+## Project structure
+
+```text
+app/
+  core/
+  db/
+  models/
+  routers/
+  schemas/
+  services/
+  utils/
+  main.py
+alembic/
+tests/
+```
+
+## Setup
+
+1. Create a virtual environment and activate it.
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Copy env template:
+3. Create your local environment file:
    ```bash
    cp .env.example .env
    ```
-4. Run migrations:
+4. Run database migrations before starting the app:
    ```bash
    alembic upgrade head
    ```
-5. Start the app:
+5. Start the API server:
    ```bash
    uvicorn app.main:app --reload
    ```
-6. Open docs: `http://127.0.0.1:8000/docs`
+6. Open API docs:
+   - `http://127.0.0.1:8000/docs`
+   - `http://127.0.0.1:8000/redoc`
 
-## Existing Day 1 endpoints
-- Auth: `/auth/register`, `/auth/login`, `/auth/me`
-- Volunteers CRUD: `/volunteers`
-- Events CRUD: `/events`
+## Run tests
 
-## New Day 2 endpoints
-- Shifts
-  - `POST /events/{event_id}/shifts`
-  - `GET /events/{event_id}/shifts`
-  - `GET /shifts/{id}`
-  - `PATCH /shifts/{id}`
-  - `DELETE /shifts/{id}`
-- Work logs
-  - `POST /work-logs`
-  - `GET /work-logs/{id}`
-  - `PATCH /work-logs/{id}`
-  - `DELETE /work-logs/{id}`
-- Hours summary
-  - `GET /volunteers/{id}/hours`
-  - `GET /events/{id}/hours`
-- CSV import (admin only)
-  - `POST /imports/volunteers`
-  - `POST /imports/events`
-  - `POST /imports/attendance`
-
-## Worked minutes rule
-- `effective_start = max(checked_in_at, shift.start_time)`
-- `effective_end = min(checked_out_at, shift.end_time)`
-- `worked_minutes = max(0, effective_end - effective_start)`
-
-## Volunteer naming note
-- User auth payload uses `full_name`.
-- Volunteer payload uses `name` and also accepts `full_name` as alias.
-
-## CSV templates
-- `volunteers_import_template_en.csv`
-- `events_import_template_en.csv`
-- `attendance_import_template_en.csv`
-
-## Tests
 ```bash
 pytest -q
 ```
+
+## Field naming note
+
+- Auth user payload uses `full_name`.
+- Volunteer payload uses `name`, and also accepts `full_name` as an input alias for compatibility.
+
+## Notes
+
+- Shifts, work logs, analytics, and CSV import are intentionally postponed for later milestones.

@@ -22,6 +22,7 @@ def test_volunteer_create_list_happy_path(client):
         headers=headers,
     )
     assert create_response.status_code == 201
+    assert create_response.json()["name"] == "John Volunteer"
 
     list_response = client.get("/volunteers", headers=headers)
     assert list_response.status_code == 200
