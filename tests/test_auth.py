@@ -46,7 +46,6 @@ def test_protected_route_requires_token(client):
     response = client.get("/volunteers")
     assert response.status_code == 403
 
-
 def test_protected_route_with_token(client):
     client.post(
         "/auth/register",
