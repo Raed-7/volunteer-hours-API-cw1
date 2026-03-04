@@ -18,24 +18,61 @@ def _decode_csv(content: bytes) -> list[dict[str, str]]:
 
 def import_volunteers_csv(db: Session, content: bytes) -> dict[str, int]:
     rows = _decode_csv(content)
-    created, updated = 0, 0
+    created, updated, skipped = 0, 0, 0
+
+    def pick(row: dict[str, str], *keys: str) -> str:
+        for key in keys:
+            value = row.get(key)
+            if value is not None and str(value).strip():
+                return str(value).strip()
+        return ""
+
     for row in rows:
-        email = (row.get("email") or "").strip().lower()
-        if not email:
+        volunteer_no = pick(row, "volunteer_no", "volunteer_id", "volunteer_number", "id")
+        name = pick(row, "name", "full_name", "volunteer_name")
+        email = pick(row, "email", "mail", "email_address").lower() or None
+        phone = pick(row, "phone", "mobile", "phone_number", "contact") or None
+
+        if not name:
+            skipped += 1
             continue
-        name = (row.get("name") or row.get("full_name") or "").strip()
-        phone = (row.get("phone") or "").strip() or None
-        existing = db.query(Volunteer).filter(Volunteer.email == email).first()
+
+        existing = None
+
+        if volunteer_no:
+            existing = db.query(Volunteer).filter(Volunteer.volunteer_no == volunteer_no).first()
+
+        if not existing and email:
+            existing = db.query(Volunteer).filter(Volunteer.email == email).first()
+
+        if not existing and phone:
+            existing = db.query(Volunteer).filter(Volunteer.phone == phone).first()
+
+        if not existing:
+            existing = db.query(Volunteer).filter(Volunteer.name == name).first()
+
         if existing:
+            if volunteer_no:
+                existing.volunteer_no = volunteer_no
             existing.name = name or existing.name
-            existing.phone = phone
+            if email:
+                existing.email = email
+            if phone:
+                existing.phone = phone
             updated += 1
         else:
-            db.add(Volunteer(name=name, email=email, phone=phone))
+            db.add(
+                Volunteer(
+                    volunteer_no=volunteer_no or None,
+                    name=name,
+                    email=email,
+                    phone=phone,
+                )
+            )
             created += 1
-    db.commit()
-    return {"created": created, "updated": updated}
 
+    db.commit()
+    return {"created": created, "updated": updated, "skipped": skipped}
 
 def import_events_csv(db: Session, content: bytes) -> dict[str, int]:
     rows = _decode_csv(content)
