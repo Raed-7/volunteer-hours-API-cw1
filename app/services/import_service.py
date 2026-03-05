@@ -76,30 +76,59 @@ def import_volunteers_csv(db: Session, content: bytes) -> dict[str, int]:
 
 def import_events_csv(db: Session, content: bytes) -> dict[str, int]:
     rows = _decode_csv(content)
-    created, updated = 0, 0
+
+    created = 0
+    updated = 0
+    skipped = 0
+
+    def pick(row: dict[str, str], *keys: str) -> str:
+        for key in keys:
+            value = row.get(key)
+            if value and str(value).strip():
+                return str(value).strip()
+        return ""
+
     for row in rows:
-        title = (row.get("title") or "").strip()
-        location = (row.get("location") or "").strip()
-        event_date_raw = (row.get("event_date") or "").strip()
-        if not title or not location or not event_date_raw:
+
+        title = pick(row, "event_title", "title", "event_name")
+        category = pick(row, "event_category", "category")
+        date_raw = pick(row, "event_date", "date")
+        location = pick(row, "location", "venue")
+        description = pick(row, "description", "details")
+
+        if not title or not date_raw:
+            skipped += 1
             continue
-        event_date_value = date.fromisoformat(event_date_raw)
+
+        try:
+            event_date = datetime.strptime(date_raw, "%d/%m/%Y").date()
+        except:
+            skipped += 1
+            continue
 
         existing = (
             db.query(Event)
-            .filter(Event.title == title, Event.location == location, Event.event_date == event_date_value)
+            .filter(Event.title == title, Event.event_date == event_date)
             .first()
         )
-        description = (row.get("description") or "").strip() or None
+
         if existing:
-            existing.description = description
+            existing.description = description or existing.description
+            existing.location = location or existing.location
             updated += 1
         else:
-            db.add(Event(title=title, description=description, location=location, event_date=event_date_value))
+            db.add(
+                Event(
+                    title=title,
+                    description=description,
+                    location=location or "Unknown",
+                    event_date=event_date,
+                )
+            )
             created += 1
-    db.commit()
-    return {"created": created, "updated": updated}
 
+    db.commit()
+    return {"created": created, "updated": updated, "skipped": skipped}
 
 def import_attendance_csv(db: Session, content: bytes) -> dict[str, int]:
     rows = _decode_csv(content)
