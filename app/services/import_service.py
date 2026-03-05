@@ -131,46 +131,65 @@ def import_events_csv(db: Session, content: bytes) -> dict[str, int]:
     return {"created": created, "updated": updated, "skipped": skipped}
 
 def import_attendance_csv(db: Session, content: bytes) -> dict[str, int]:
+
     rows = _decode_csv(content)
-    created, updated = 0, 0
+
+    created = 0
+    skipped = 0
+
     for row in rows:
-        volunteer_email = (row.get("volunteer_email") or "").strip().lower()
-        shift_id = int(row.get("shift_id") or 0)
-        checked_in_at_raw = (row.get("checked_in_at") or "").strip()
-        checked_out_at_raw = (row.get("checked_out_at") or "").strip()
-        if not volunteer_email or not shift_id or not checked_in_at_raw or not checked_out_at_raw:
+
+        name = row.get("full_name", "").strip()
+        category = row.get("event_category", "").strip()
+        date_raw = row.get("event_date", "").strip()
+        hours_raw = row.get("hours", "").strip()
+
+        if not name or not date_raw:
+            skipped += 1
             continue
 
-        volunteer = db.query(Volunteer).filter(Volunteer.email == volunteer_email).first()
-        shift = db.get(Shift, shift_id)
-        if not volunteer or not shift:
+        try:
+            event_date = datetime.strptime(date_raw, "%d/%m/%Y").date()
+        except:
+            skipped += 1
             continue
 
-        checked_in_at = datetime.fromisoformat(checked_in_at_raw)
-        checked_out_at = datetime.fromisoformat(checked_out_at_raw)
-        worked_minutes = calculate_worked_minutes(
-            shift_start=shift.start_time,
-            shift_end=shift.end_time,
-            checked_in_at=checked_in_at,
-            checked_out_at=checked_out_at,
+        try:
+            hours = float(hours_raw)
+        except:
+            skipped += 1
+            continue
+
+        volunteer = db.query(Volunteer).filter(Volunteer.name == name).first()
+
+        if not volunteer:
+            skipped += 1
+            continue
+
+        event = (
+            db.query(Event)
+            .filter(Event.event_date == event_date)
+            .first()
         )
 
-        existing = db.query(WorkLog).filter(WorkLog.volunteer_id == volunteer.id, WorkLog.shift_id == shift.id).first()
-        if existing:
-            existing.checked_in_at = checked_in_at
-            existing.checked_out_at = checked_out_at
-            existing.worked_minutes = worked_minutes
-            updated += 1
-        else:
-            db.add(
-                WorkLog(
-                    volunteer_id=volunteer.id,
-                    shift_id=shift.id,
-                    checked_in_at=checked_in_at,
-                    checked_out_at=checked_out_at,
-                    worked_minutes=worked_minutes,
-                )
-            )
-            created += 1
+        if not event:
+            skipped += 1
+            continue
+
+        minutes = int(hours * 60)
+
+        work_log = WorkLog(
+            volunteer_id=volunteer.id,
+            shift_id=None,
+            worked_minutes=minutes,
+        )
+
+        db.add(work_log)
+        created += 1
+
     db.commit()
-    return {"created": created, "updated": updated}
+
+    return {
+        "created": created,
+        "skipped": skipped,
+    }
