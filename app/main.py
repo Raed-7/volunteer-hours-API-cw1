@@ -4,7 +4,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import HTMLResponse, JSONResponse
 
 
-from app.routers import auth, events, volunteers, shifts, work_logs, imports, analytics
+from app.routers import auth, events, volunteers, shifts, work_logs, imports, analytics, stats
 
 app = FastAPI(title="Volunteer Hours Management API", version="0.1.0", docs_url=None, redoc_url=None)
 
@@ -284,6 +284,7 @@ app.include_router(shifts.router)
 app.include_router(work_logs.router)
 app.include_router(imports.router)
 app.include_router(analytics.router)
+app.include_router(stats.router)
 
 @app.get("/health", tags=["health"])
 def health_check() -> dict[str, str]:
