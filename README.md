@@ -81,11 +81,12 @@ Admin-only CSV import endpoints:
 * `POST /imports/events`
 * `POST /imports/attendance`
 
-### Analytics
+### Analytics and stats
 
 * `GET /analytics/leaderboard`
 * `GET /analytics/awards`
 * `GET /analytics/volunteers/{volunteer_id}/summary`
+* `GET /stats`
 
 ## Worked-hours logic
 
@@ -169,16 +170,20 @@ alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
-### 8. Open API docs
+### 8. Open the project
 
-* `http://127.0.0.1:8000/docs`
-* `http://127.0.0.1:8000/redoc`
+* Homepage: `http://127.0.0.1:8000/`
+* API Docs: `http://127.0.0.1:8000/docs`
 
 ## Running tests
 
 ```bash
 pytest -q
 ```
+
+## Continuous Integration (CI)
+
+GitHub Actions is configured to run the test suite automatically on pushes to `main`.
 
 ## Importing CSV data
 
@@ -198,6 +203,7 @@ Available endpoints:
 
 ## Main route groups
 
+* `/`
 * `/auth`
 * `/volunteers`
 * `/events`
@@ -205,6 +211,8 @@ Available endpoints:
 * `/work-logs`
 * `/imports`
 * `/analytics`
+* `/stats`
+* `/health`
 
 ## Field naming note
 
@@ -213,8 +221,14 @@ Available endpoints:
 
 This difference is kept for compatibility with the current implementation.
 
+## Documentation
+
+* [API Documentation (Markdown)](docs/API_DOCUMENTATION.md)
+* [API Documentation (PDF)](docs/API_DOCUMENTATION.pdf)
+
 ## Notes
 
-* The base URL `/` may return `404 Not Found`; the main interactive interface is available at `/docs`
+* The base URL `/` now provides a homepage for the project
+* The main interactive API interface is available at `/docs`
 * Import endpoints are admin-protected
 * Analytics results are most useful after importing volunteer, event, and attendance data
