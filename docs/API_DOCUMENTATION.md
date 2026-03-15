@@ -4,13 +4,14 @@
 
 The **Volunteer Hours Management API** is a FastAPI backend for managing:
 
-* users
-* volunteers
-* events
-* shifts
-* work logs
-* CSV imports
-* analytics
+- users
+- volunteers
+- events
+- shifts
+- work logs
+- CSV imports
+- analytics
+- project statistics
 
 This API is designed for event organisers who need to track volunteer work accurately and generate useful summaries from stored data.
 
@@ -22,8 +23,11 @@ Local development base URL:
 
 Interactive API docs:
 
-* `/docs`
-* `/redoc`
+- `/docs`
+
+Homepage:
+
+- `/`
 
 ---
 
@@ -45,32 +49,41 @@ Most routes are protected and require a valid JWT access token.
 
 Supported roles:
 
-* `admin`
-* `organiser`
+- `admin`
+- `organiser`
 
 ### Admin-only functionality
 
-These routes should only be used by an admin:
+These routes are intended for admin users:
 
-* import endpoints
-* destructive routes if admin restriction is applied there
+- import endpoints
 
 ---
 
 ## Route Groups
 
-* `/auth`
-* `/volunteers`
-* `/events`
-* `/shifts`
-* `/work-logs`
-* `/imports`
-* `/analytics`
-* `/health`
+- `/`
+- `/auth`
+- `/volunteers`
+- `/events`
+- `/shifts`
+- `/work-logs`
+- `/imports`
+- `/analytics`
+- `/stats`
+- `/health`
 
 ---
 
 # Endpoints
+
+## Home
+
+### `GET /`
+
+Returns a simple homepage for the project with links to important routes such as `/docs` and `/health`.
+
+---
 
 ## Health
 
@@ -165,6 +178,7 @@ Create a volunteer.
 
 ```json
 {
+  "volunteer_no": "V001",
   "name": "Ahmed Ali",
   "email": "ahmed@test.com",
   "phone": "772100000"
@@ -176,6 +190,7 @@ Create a volunteer.
 ```json
 {
   "id": 1,
+  "volunteer_no": "V001",
   "name": "Ahmed Ali",
   "email": "ahmed@test.com",
   "phone": "772100000"
@@ -364,9 +379,9 @@ Delete a work log.
 
 Worked time is calculated automatically using shift boundaries:
 
-* `effective_start = max(checked_in_at, shift.start_time)`
-* `effective_end = min(checked_out_at, shift.end_time)`
-* `worked_minutes = max(0, effective_end - effective_start)`
+- `effective_start = max(checked_in_at, shift.start_time)`
+- `effective_end = min(checked_out_at, shift.end_time)`
+- `worked_minutes = max(0, effective_end - effective_start)`
 
 This prevents over-counting outside the planned shift window.
 
@@ -374,8 +389,8 @@ This prevents over-counting outside the planned shift window.
 
 Examples of rejected cases:
 
-* `checked_out_at` before `checked_in_at`
-* duplicate work log for the same volunteer and shift
+- `checked_out_at` before `checked_in_at`
+- duplicate work log for the same volunteer and shift
 
 ---
 
@@ -395,18 +410,64 @@ Upload a CSV file of events.
 
 Upload a CSV file of attendance/work-log data.
 
-### Expected CSV files
+### Flexible import behavior
 
-* `volunteers_import_template_en.csv`
-* `events_import_template_en.csv`
-* `attendance_import_template_en.csv`
+The import system supports flexible spreadsheet structures.
+
+#### Volunteers import
+
+The volunteers importer can work with alternate column names such as:
+
+- `volunteer_no`
+- `volunteer_id`
+- `volunteer_number`
+- `full_name`
+- `volunteer_name`
+- `email`
+- `mail`
+- `phone`
+- `mobile`
+
+It can also import volunteers when email or phone is missing, as long as a usable name exists.
+
+#### Events import
+
+The events importer supports alternate column names such as:
+
+- `event_title`
+- `title`
+- `event_name`
+- `event_date`
+- `date`
+- `location`
+- `venue`
+- `description`
+- `details`
+
+It also supports more than one date format, including:
+
+- `YYYY-MM-DD`
+- `DD/MM/YYYY`
+
+#### Attendance import
+
+The attendance importer supports spreadsheet-style attendance data and converts it into stored work-log information.
+
+### Example CSV files
+
+Examples used in this project:
+
+- `volunteers_import_template_en.csv`
+- `events_import_template_en.csv`
+- `attendance_import_template_en.csv`
 
 ### Example import response
 
 ```json
 {
   "created": 10,
-  "updated": 2
+  "updated": 2,
+  "skipped": 1
 }
 ```
 
@@ -437,9 +498,9 @@ Return volunteers grouped by award tier.
 
 ### Default award tiers
 
-* `tier_a`: 20 or more hours
-* `tier_b`: 15 to less than 20 hours
-* `tier_c`: 1 to less than 15 hours
+- `tier_a`: 20 or more hours
+- `tier_b`: 15 to less than 20 hours
+- `tier_c`: 1 to less than 15 hours
 
 **Example response**
 
@@ -489,20 +550,56 @@ Return a volunteer summary.
 
 ---
 
+## Stats
+
+### `GET /stats`
+
+Return overall totals for the project data.
+
+**Example response**
+
+```json
+{
+  "total_volunteers": 116,
+  "total_events": 54,
+  "total_shifts": 54,
+  "total_work_logs": 116,
+  "total_worked_minutes": 12000,
+  "total_worked_hours": 200.0
+}
+```
+
+---
+
 ## Error Codes
 
 Common error responses:
 
-* `200 OK` — successful read/update
-* `201 Created` — successful create
-* `204 No Content` — successful delete
-* `400 Bad Request` — invalid request or business-rule failure
-* `401 Unauthorized` — missing or invalid token
-* `403 Forbidden` — authenticated but not allowed
-* `404 Not Found` — requested resource does not exist
-* `422 Unprocessable Entity` — request validation error
+- `200 OK` — successful read/update
+- `201 Created` — successful create
+- `204 No Content` — successful delete
+- `400 Bad Request` — invalid request or business-rule failure
+- `401 Unauthorized` — missing or invalid token
+- `403 Forbidden` — authenticated but not allowed
+- `404 Not Found` — requested resource does not exist
+- `422 Unprocessable Entity` — request validation error
 
-### Example error response
+### Example validation error response
+
+```json
+{
+  "detail": "Validation failed",
+  "errors": [
+    {
+      "loc": ["body", "email"],
+      "msg": "value is not a valid email address",
+      "type": "value_error"
+    }
+  ]
+}
+```
+
+### Example resource error response
 
 ```json
 {
@@ -514,7 +611,9 @@ Common error responses:
 
 ## Notes
 
-* The base path `/` may return `404 Not Found`; use `/docs` for the main interactive interface
-* Auth registration currently uses `full_name`
-* Volunteer payload currently uses `name`
-* Analytics are most meaningful after importing data or creating work logs manually
+- The base path `/` now provides a homepage for the project
+- `/docs` is the main interactive interface for testing the API
+- Auth registration currently uses `full_name`
+- Volunteer payload currently uses `name`
+- Volunteer imports support files without email or phone
+- Analytics are most meaningful after importing data or creating work logs manually
