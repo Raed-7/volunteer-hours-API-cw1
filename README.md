@@ -232,3 +232,6 @@ This difference is kept for compatibility with the current implementation.
 * The main interactive API interface is available at `/docs`
 * Import endpoints are admin-protected
 * Analytics results are most useful after importing volunteer, event, and attendance data
+## Final note
+
+This project was prepared for coursework submission and oral demonstration.

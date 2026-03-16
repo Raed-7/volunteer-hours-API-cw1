@@ -97,7 +97,6 @@ Simple health check endpoint.
 {
   "status": "ok"
 }
-```
 
 ---
 
@@ -571,6 +570,25 @@ Return overall totals for the project data.
 
 ---
 
+## Stats
+### `GET /stats`
+
+Return overall totals for the project data.
+
+**Example response**
+
+```json
+{
+  "total_volunteers": 116,
+  "total_events": 54,
+  "total_shifts": 54,
+  "total_work_logs": 116,
+  "total_worked_minutes": 12000,
+  "total_worked_hours": 200.0
+}
+```
+--- 
+
 ## Error Codes
 
 Common error responses:
@@ -584,7 +602,7 @@ Common error responses:
 - `404 Not Found` — requested resource does not exist
 - `422 Unprocessable Entity` — request validation error
 
-### Example validation error response
+### Example error response
 
 ```json
 {
@@ -600,20 +618,16 @@ Common error responses:
 ```
 
 ### Example resource error response
-
-```json
+```json 
 {
   "detail": "Volunteer not found"
 }
 ```
-
 ---
 
 ## Notes
 
-- The base path `/` now provides a homepage for the project
-- `/docs` is the main interactive interface for testing the API
-- Auth registration currently uses `full_name`
-- Volunteer payload currently uses `name`
-- Volunteer imports support files without email or phone
-- Analytics are most meaningful after importing data or creating work logs manually
+* The base path `/` may return `404 Not Found`; use `/docs` for the main interactive interface
+* Auth registration currently uses `full_name`
+* Volunteer payload currently uses `name`
+* Analytics are most meaningful after importing data or creating work logs manually
