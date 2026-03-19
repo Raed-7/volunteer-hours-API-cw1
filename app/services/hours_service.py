@@ -15,7 +15,7 @@ def calculate_worked_minutes(
 ) -> int:
     if checked_out_at < checked_in_at:
         raise ValueError("checked_out_at must be after checked_in_at")
-
+    # Calculate only the time that falls within the scheduled event/shift window
     effective_start = max(checked_in_at, shift_start)
     effective_end = min(checked_out_at, shift_end)
 

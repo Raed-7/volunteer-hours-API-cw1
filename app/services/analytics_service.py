@@ -12,7 +12,7 @@ from app.schemas.analytics import (
     VolunteerActivityEntry,
     VolunteerSummaryResponse,
 )
-
+# Keeping award thresholds easy to change if hours/rules of certificate change later
 TIER_A_MIN_HOURS = 20
 TIER_B_MIN_HOURS = 15
 TIER_C_MIN_HOURS = 1
