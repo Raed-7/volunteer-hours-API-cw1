@@ -32,15 +32,52 @@ def home() -> str:
                 box-sizing: border-box;
             }
 
+            :root {
+                --bg-1: #0f172a;
+                --bg-2: #111827;
+                --bg-3: #1e293b;
+                --surface: rgba(255, 255, 255, 0.08);
+                --surface-2: rgba(255, 255, 255, 0.06);
+                --border: rgba(255, 255, 255, 0.12);
+                --text: #e5e7eb;
+                --muted: #cbd5e1;
+                --muted-2: #94a3b8;
+                --primary: #3b82f6;
+                --primary-2: #2563eb;
+                --focus: #facc15;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
             body {
                 margin: 0;
                 font-family: Inter, Arial, sans-serif;
                 background:
                     radial-gradient(circle at top left, #1d4ed8 0%, transparent 30%),
                     radial-gradient(circle at top right, #7c3aed 0%, transparent 25%),
-                    linear-gradient(135deg, #0f172a 0%, #111827 45%, #1e293b 100%);
-                color: #e5e7eb;
+                    linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+                color: var(--text);
                 min-height: 100vh;
+            }
+
+            .skip-link {
+                position: absolute;
+                left: 16px;
+                top: -48px;
+                background: #ffffff;
+                color: #111827;
+                padding: 12px 16px;
+                border-radius: 10px;
+                font-weight: 700;
+                text-decoration: none;
+                z-index: 1000;
+                transition: top 0.2s ease;
+            }
+
+            .skip-link:focus {
+                top: 16px;
             }
 
             .page {
@@ -117,6 +154,33 @@ def home() -> str:
                 background: rgba(255, 255, 255, 0.08);
                 color: #e5e7eb;
                 border: 1px solid rgba(255, 255, 255, 0.14);
+            }
+
+            .stats-strip {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 14px;
+                margin-top: 28px;
+            }
+
+            .stat-card {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 18px;
+                padding: 18px;
+            }
+
+            .stat-card strong {
+                display: block;
+                color: #ffffff;
+                font-size: 1rem;
+                margin-bottom: 6px;
+            }
+
+            .stat-card span {
+                color: var(--muted);
+                font-size: 0.95rem;
+                line-height: 1.6;
             }
 
             .grid {
@@ -198,62 +262,80 @@ def home() -> str:
         </style>
     </head>
     <body>
-        <main class="page">
-            <section class="hero">
+        <a class="skip-link" href="#main-content">Skip to main content</a>
+
+        <main id="main-content" class="page">
+            <header class="hero" aria-label="Project introduction">
                 <div class="badge">FastAPI • Volunteer Management • Analytics</div>
                 <h1>Volunteer Hours Management API</h1>
                 <p class="subtitle">
-                    A modern backend API for managing volunteers, events, shifts, work logs,
-                    CSV imports, and analytics. Built to help organisers track participation
-                    accurately and turn raw attendance data into meaningful volunteer-hour insights.
+                    A backend API for managing volunteers, events, shifts, work logs,
+                    flexible CSV imports, and analytics. It helps organisers record
+                    participation accurately and turn attendance data into meaningful
+                    volunteer-hour insights.
                 </p>
 
-                <div class="actions">
-                    <a class="btn btn-primary" href="/docs">Open Swagger Docs</a>
-                    <a class="btn btn-secondary" href="/health">Health Check</a>
-                </div>
+                <nav class="actions" aria-label="Quick links">
+                    <a class="btn btn-primary" href="/docs">Open API Docs</a>
+                    <a class="btn btn-secondary" href="/health">Check Health Status</a>
+                </nav>
 
-                <div class="grid">
+                <section class="stats-strip" aria-label="Quick summary">
+                    <div class="stat-card">
+                        <strong>Secure Access</strong>
+                        <span>JWT authentication with role-based access for admin and organiser users.</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong>Flexible Imports</strong>
+                        <span>Supports volunteer, event, and attendance files from real spreadsheets.</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong>Worked Hours</strong>
+                        <span>Calculates official worked time using shift boundaries and validation rules.</span>
+                    </div>
+                </section>
+
+                <section class="grid" aria-label="Core features">
                     <article class="card">
                         <h3>Authentication</h3>
-                        <p>Secure JWT-based login with role support for admin and organiser users.</p>
+                        <p>Secure login, protected routes, and role support for organisers and admins.</p>
                     </article>
                     <article class="card">
                         <h3>Volunteer Tracking</h3>
-                        <p>Create and manage volunteers, events, shifts, and work logs with structured data models.</p>
+                        <p>Manage volunteers, events, shifts, and work logs with structured API endpoints.</p>
                     </article>
                     <article class="card">
                         <h3>CSV Imports</h3>
-                        <p>Import volunteers, events, and attendance from real spreadsheets with flexible parsing.</p>
+                        <p>Import volunteers, events, and attendance from different spreadsheet formats.</p>
                     </article>
                     <article class="card">
                         <h3>Analytics</h3>
                         <p>Generate leaderboard, awards, and volunteer summaries from imported or manually added records.</p>
                     </article>
-                </div>
-            </section>
+                </section>
+            </header>
 
-            <section class="section">
-                <div class="panel">
+            <section class="section" aria-label="Project details">
+                <section class="panel">
                     <h2>Project Purpose</h2>
                     <p>
                         This system is designed for volunteer event management. It helps organisers
-                        store records accurately, calculate official worked hours, and generate useful
-                        summaries for recognition, reporting, and decision-making.
+                        store records accurately, calculate official worked hours, and produce
+                        useful summaries for recognition, reporting, and decision-making.
                     </p>
-                </div>
+                </section>
 
-                <div class="panel">
+                <aside class="panel">
                     <h2>Quick Access</h2>
                     <ul>
                         <li><strong>/docs</strong> — interactive Swagger interface</li>
-                        <li><strong>/redoc</strong> — alternative API documentation view</li>
+                        <li><strong>/stats</strong> — overall project totals</li>
                         <li><strong>/health</strong> — service status check</li>
                     </ul>
                     <p class="footer-note">
-                        Tip: start with Swagger Docs to test routes and explore the full API.
+                        Tip: start with <code>/docs</code> to explore routes and test the full API.
                     </p>
-                </div>
+                </aside>
             </section>
         </main>
     </body>
