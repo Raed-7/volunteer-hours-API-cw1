@@ -59,18 +59,12 @@ def import_volunteers_csv(db: Session, content: bytes) -> dict[str, int]:
     rows = _decode_csv(content)
     created, updated, skipped = 0, 0, 0
 
-    def pick(row: dict[str, str], *keys: str) -> str:
-        for key in keys:
-            value = row.get(key)
-            if value is not None and str(value).strip():
-                return str(value).strip()
-        return ""
 
     for row in rows:
-        volunteer_no = pick(row, "volunteer_no", "volunteer_id", "volunteer_number", "id")
-        name = pick(row, "name", "full_name", "volunteer_name")
-        email = pick(row, "email", "mail", "email_address").lower() or None
-        phone = pick(row, "phone", "mobile", "phone_number", "contact") or None
+        volunteer_no = _get_any(row, "volunteer_no", "volunteer_id", "volunteer_number", "id")
+        name = _get_any(row, "name", "full_name", "volunteer_name")
+        email = _get_any(row, "email", "mail", "email_address").lower() or None
+        phone = _get_any(row, "phone", "mobile", "phone_number", "contact") or None
 
         if not name:
             skipped += 1
