@@ -226,12 +226,31 @@ This difference is kept for compatibility with the current implementation.
 * [API Documentation (Markdown)](docs/API_DOCUMENTATION.md)
 * [API Documentation (PDF)](docs/API_DOCUMENTATION.pdf)
 
+## Datasets
+
+The repository includes example datasets used for testing and demonstration:
+ 
+* the datasets were based on previous volunteering records
+* permission was obtained to use them
+* the API replaces the manual Excel-based process by importing, storing, and analysing the records automatically.
+* Real data:
+- `datasets/volunteers.csv`
+- `datasets/events.csv`
+- `datasets/attendance.csv`
+These datasets were prepared from previous volunteering records and are used to demonstrate the CSV import and analytics workflow.
+
+* Template/example files:
+- `volunteers_import_template_en.csv`
+- `events_import_template_en.csv`
+- `attendance_import_template_en.csv`
+
 ## Notes
 
 * The base URL `/` now provides a homepage for the project
 * The main interactive API interface is available at `/docs`
 * Import endpoints are admin-protected
 * Analytics results are most useful after importing volunteer, event, and attendance data
+
 ## Final note
 
 This project was prepared for coursework submission and oral demonstration.
