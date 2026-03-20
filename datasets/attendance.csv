@@ -1,0 +1,384 @@
+full_name,event_category,event_date,hours
+Dr. Mohammed Al-Ghamdi,Course Delivery,2024-01-25,2.0
+Prof. Dr. Mohammed Hassan Al Safran,Course Delivery,2024-01-28,3.0
+Abdullah Al-Zahrani,Course Delivery,2024-01-28,2.0
+Abdullah Al-Mughrid,Course Delivery,2024-06-04,2.0
+Dr. Alaa Sanari,Course Delivery,2024-06-28,1.5
+Prof. Dr. Mohammed Hassan Al Safran,Course Delivery,2024-07-11,2.0
+Bisman Mohammed Nahhas,Course Delivery,2024-10-03,2.0
+Dr. Hiyam Mulla,Course Delivery,2024-10-08,1.5
+Amirah Al-Harbi,Course Delivery,2024-10-21,2.0
+Professor Omar Al-Tabbaa,Course Delivery,2024-10-30,2.5
+Dr. Mashael Al-Saeedi,Course Delivery,2024-11-06,2.0
+Sarah Al-Sayyari,Course Delivery,2024-11-25,3.5
+Mishari Al-Mutairi,Meeting or Event Organization,2024-02-04,1.0
+Zahra Al-Hamoud,Meeting or Event Organization,2024-02-04,1.0
+Tala Najdi,Meeting or Event Organization,2024-02-04,1.0
+Basil Shaaban,Meeting or Event Organization,2024-02-04,1.0
+Al-Danah Al-Muhaysini,Meeting or Event Organization,2024-04-04,2.5
+Ibtisam Mohammed,Meeting or Event Organization,2024-04-04,2.5
+Mohammed Houldar,Meeting or Event Organization,2024-04-04,2.5
+Ibtisam Mohammed,Meeting or Event Organization,2024-10-08,1.5
+Ibtisam Mohammed,Meeting or Event Organization,2024-10-21,2.0
+Hassan Al-Mujallad,Meeting or Event Organization,2024-10-21,2.0
+Ibtisam Mohammed,Meeting or Event Organization,2024-11-25,2.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-01-16,1.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-01-18,1.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-02-18,3.0
+Mishari Al-Mutairi,Event Organization Support,2024-02-18,3.0
+Zahra Al-Hamoud,Event Organization Support,2024-02-18,3.0
+Basil Shaaban,Event Organization Support,2024-02-18,3.0
+Nayef Al-Khanbashi,Event Organization Support,2024-02-18,3.0
+Abdulsalam Al-Shammari,Event Organization Support,2024-02-18,3.0
+Ahmed Al-Juhani,Event Organization Support,2024-02-18,3.0
+Al-Danah Al-Muhaysini,Event Organization Support,2024-02-18,3.0
+Ibtisam Mohammed,Event Organization Support,2024-02-18,3.0
+Raghad Al-Harbi,Event Organization Support,2024-02-18,3.0
+Abdulrahman Al-Khutaifi,Event Organization Support,2024-02-18,3.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-02-21,3.0
+Mishari Al-Mutairi,Event Organization Support,2024-02-21,3.0
+Tala Najdi,Event Organization Support,2024-02-21,3.0
+Basil Shaaban,Event Organization Support,2024-02-21,3.0
+Nayef Al-Khanbashi,Event Organization Support,2024-02-21,3.0
+Abdulsalam Al-Shammari,Event Organization Support,2024-02-21,3.0
+Ahmed Al-Juhani,Event Organization Support,2024-02-21,3.0
+Al-Danah Al-Muhaysini,Event Organization Support,2024-02-21,3.0
+Ibtisam Mohammed,Event Organization Support,2024-02-21,3.0
+Raghad Al-Harbi,Event Organization Support,2024-02-21,3.0
+Abdulrahman Al-Khutaifi,Event Organization Support,2024-02-21,3.0
+Maha Al-Zahrani,Event Organization Support,2024-02-21,3.0
+Taraf Al-Zahrani,Event Organization Support,2024-02-21,3.0
+Abdullah Al-Hudhali,Event Organization Support,2024-02-21,3.0
+Abdulrahman Halawani,Event Organization Support,2024-02-21,3.0
+Badr Al-Farwan,Event Organization Support,2024-02-21,3.0
+Mishari Al-Mutairi,Event Organization Support,2024-02-22,2.0
+Basil Shaaban,Event Organization Support,2024-02-22,2.0
+Nayef Al-Khanbashi,Event Organization Support,2024-02-22,2.0
+Abdulsalam Al-Shammari,Event Organization Support,2024-02-22,6.0
+Ahmed Al-Juhani,Event Organization Support,2024-02-22,2.0
+Badr Al-Farwan,Event Organization Support,2024-02-22,2.0
+Rakan Al-Jumaiya,Event Organization Support,2024-02-22,2.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-02-23,4.5
+Mishari Al-Mutairi,Event Organization Support,2024-02-23,9.5
+Zahra Al-Hamoud,Event Organization Support,2024-02-23,3.0
+Tala Najdi,Event Organization Support,2024-02-23,2.0
+Basil Shaaban,Event Organization Support,2024-02-23,9.5
+Nayef Al-Khanbashi,Event Organization Support,2024-02-23,10.0
+Abdulsalam Al-Shammari,Event Organization Support,2024-02-23,10.0
+Ahmed Al-Juhani,Event Organization Support,2024-02-23,10.0
+Al-Danah Al-Muhaysini,Event Organization Support,2024-02-23,6.0
+Ibtisam Mohammed,Event Organization Support,2024-02-23,10.0
+Raghad Al-Harbi,Event Organization Support,2024-02-23,8.0
+Abdulrahman Al-Khutaifi,Event Organization Support,2024-02-23,8.0
+Maha Al-Zahrani,Event Organization Support,2024-02-23,1.0
+Taraf Al-Zahrani,Event Organization Support,2024-02-23,5.0
+Abdullah Al-Hudhali,Event Organization Support,2024-02-23,5.0
+Abdulrahman Halawani,Event Organization Support,2024-02-23,7.0
+Ahmed Al-Mutairi,Event Organization Support,2024-02-23,1.0
+Badr Al-Farwan,Event Organization Support,2024-02-23,8.5
+Nouf Al-Harandah,Event Organization Support,2024-02-23,4.0
+Maha Al-Ruwaili,Event Organization Support,2024-02-23,6.0
+Fahad Al-Khalidi,Event Organization Support,2024-02-23,9.0
+Raghad Al-Juhani,Event Organization Support,2024-02-23,10.0
+Iman Ali Al-Balawi,Event Organization Support,2024-02-23,10.0
+Qusai Barkati,Event Organization Support,2024-02-23,4.0
+Abdulrahman Al-Sagheer,Event Organization Support,2024-02-23,4.0
+Abdullah Al-Zahrani,Event Organization Support,2024-02-23,2.0
+Anas Al-Harbi,Event Organization Support,2024-02-23,2.0
+Yazeed Al-Omari,Event Organization Support,2024-02-23,2.0
+Mohammed Al-Dosari,Event Organization Support,2024-02-23,2.0
+Abdulrahman Al-Mutairi,Event Organization Support,2024-02-23,2.0
+Amwaj Abu Qumzah,Event Organization Support,2024-02-23,2.0
+Basmah Al-Subhi,Event Organization Support,2024-02-23,2.0
+Tahani Al-Rufaie,Event Organization Support,2024-02-23,2.0
+Adel Al-Shammari (Media),Event Organization Support,2024-02-23,5.0
+Mishari Al-Mutairi,Event Organization Support,2024-02-29,1.0
+Tala Najdi,Event Organization Support,2024-02-29,1.0
+Basil Shaaban,Event Organization Support,2024-02-29,1.0
+Ibtisam Mohammed,Event Organization Support,2024-02-29,1.0
+Abdulrahman Al-Khutaifi,Event Organization Support,2024-02-29,1.0
+Fahad Al-Khalidi,Event Organization Support,2024-02-29,1.0
+Tala Najdi,Event Organization Support,2024-03-03,2.0
+Ibtisam Mohammed,Event Organization Support,2024-03-03,1.0
+Fahad Al-Khalidi,Event Organization Support,2024-03-03,1.0
+Ahmed Al-Juhani,Event Organization Support,2024-04-08,3.0
+Ibtisam Mohammed,Event Organization Support,2024-04-08,2.0
+Mohammed Houldar,Event Organization Support,2024-04-08,4.0
+Faisal Al-Shammari,Event Organization Support,2024-04-08,4.0
+Nayef Al-Azmi,Event Organization Support,2024-04-08,4.0
+Abdullah Al-Hudhali,Event Organization Support,2024-04-09,5.0
+Mohammed Houldar,Event Organization Support,2024-04-09,5.5
+Faisal Al-Shammari,Event Organization Support,2024-04-09,6.0
+Nayef Al-Azmi,Event Organization Support,2024-04-09,6.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-04-10,1.5
+Al-Danah Al-Muhaysini,Event Organization Support,2024-04-10,6.0
+Ibtisam Mohammed,Event Organization Support,2024-04-10,6.0
+Abdullah Al-Hudhali,Event Organization Support,2024-04-10,6.0
+Mohammed Houldar,Event Organization Support,2024-04-10,6.0
+Faisal Al-Shammari,Event Organization Support,2024-04-10,6.0
+Nayef Al-Azmi,Event Organization Support,2024-04-10,6.0
+Nawaf Al-Anqari,Event Organization Support,2024-06-13,3.5
+Lama Al-Anqari,Event Organization Support,2024-06-13,3.5
+Hessa Al-Anqari,Event Organization Support,2024-06-13,3.5
+Nawaf Al-Anqari,Event Organization Support,2024-06-14,5.5
+Lama Al-Anqari,Event Organization Support,2024-06-14,5.5
+Hessa Al-Anqari,Event Organization Support,2024-06-14,5.5
+Nayef Al-Khanbashi,Event Organization Support,2024-06-16,5.0
+Raghad Al-Harbi,Event Organization Support,2024-06-16,2.0
+Abdulrahman Al-Sagheer,Event Organization Support,2024-06-16,5.0
+Abdulrahman Al-Mutairi,Event Organization Support,2024-06-16,5.0
+Khalid Al-Luhaibi,Event Organization Support,2024-06-16,5.0
+Abdulrahman Al-Jouei,Event Organization Support,2024-06-16,5.0
+Jasser Mohammed Al-Sharif,Event Organization Support,2024-06-16,5.0
+Sarah Al-Sayyari,Event Organization Support,2024-06-16,5.0
+Noura Al-Saeiri,Event Organization Support,2024-06-16,5.0
+Nahid Al-Ghamdi,Event Organization Support,2024-06-16,5.0
+Abdullah Al-Mutairi,Event Organization Support,2024-06-16,5.0
+Basil Al-Mutairi,Event Organization Support,2024-06-16,5.0
+Abdulaziz Al-Mutairi,Event Organization Support,2024-06-16,5.0
+Safi Al-Sulami,Event Organization Support,2024-06-16,5.0
+Nawaf Al-Anqari,Event Organization Support,2024-06-16,5.0
+Lama Al-Anqari,Event Organization Support,2024-06-16,5.0
+Hessa Al-Anqari,Event Organization Support,2024-06-16,5.0
+Maan Ghassan Matbouli,Event Organization Support,2024-06-16,5.0
+Nayef Al-Khanbashi,Event Organization Support,2024-08-16,3.0
+Abdulsalam Al-Shammari,Event Organization Support,2024-08-16,3.0
+Ibtisam Mohammed,Event Organization Support,2024-08-28,1.5
+Haneen Hakim,Event Organization Support,2024-08-28,1.5
+Haneen Hakim,Event Organization Support,2024-09-09,1.5
+Nawal Al-Kabkabi,Event Organization Support,2024-09-09,1.5
+Haneen Hakim,Event Organization Support,2024-09-12,1.5
+Dima Al-Saeiri,Event Organization Support,2024-09-12,1.5
+Nawal Al-Kabkabi,Event Organization Support,2024-09-12,1.5
+Haneen Hakim,Event Organization Support,2024-09-13,2.0
+Dima Al-Saeiri,Event Organization Support,2024-09-13,2.0
+Nawal Al-Kabkabi,Event Organization Support,2024-09-13,2.0
+Abdulaziz Al-Subayhan,Event Organization Support,2024-09-13,2.0
+Mohammed Al-Munayea,Event Organization Support,2024-09-13,3.0
+Abdulsalam Al-Shammari,Event Organization Support,2024-09-25,5.0
+Sarah Al-Sayyari,Event Organization Support,2024-09-25,2.5
+Fahad Al-Qahtani,Event Organization Support,2024-09-25,5.0
+Saad Al-Qahtani,Event Organization Support,2024-09-25,2.5
+Mohammed Al-Qahtani,Event Organization Support,2024-09-25,2.5
+Badr Abdullah,Event Organization Support,2024-09-25,2.5
+Hanem Mohammed,Event Organization Support,2024-09-25,3.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-09-26,5.5
+Basil Shaaban,Event Organization Support,2024-09-26,5.5
+Abdulsalam Al-Shammari,Event Organization Support,2024-09-26,5.5
+Al-Danah Al-Muhaysini,Event Organization Support,2024-09-26,5.5
+Ibtisam Mohammed,Event Organization Support,2024-09-26,5.5
+Taraf Al-Zahrani,Event Organization Support,2024-09-26,5.5
+Rakan Al-Jumaiya,Event Organization Support,2024-09-26,5.5
+Sarah Al-Sayyari,Event Organization Support,2024-09-26,5.5
+Haneen Hakim,Event Organization Support,2024-09-26,5.5
+Dima Al-Saeiri,Event Organization Support,2024-09-26,5.5
+Fahad Al-Qahtani,Event Organization Support,2024-09-26,5.5
+Saad Al-Qahtani,Event Organization Support,2024-09-26,5.5
+Mohammed Al-Qahtani,Event Organization Support,2024-09-26,5.5
+Badr Abdullah,Event Organization Support,2024-09-26,5.5
+Hanem Mohammed,Event Organization Support,2024-09-26,5.5
+Safiyyah Al-Zahrani,Event Organization Support,2024-09-26,5.5
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-09-27,8.5
+Basil Shaaban,Event Organization Support,2024-09-27,8.5
+Abdulsalam Al-Shammari,Event Organization Support,2024-09-27,6.5
+Al-Danah Al-Muhaysini,Event Organization Support,2024-09-27,8.5
+Ibtisam Mohammed,Event Organization Support,2024-09-27,8.5
+Abdulrahman Al-Khutaifi,Event Organization Support,2024-09-27,5.5
+Taraf Al-Zahrani,Event Organization Support,2024-09-27,8.5
+Raghad Al-Juhani,Event Organization Support,2024-09-27,5.5
+Abdulrahman Al-Sagheer,Event Organization Support,2024-09-27,7.0
+Rakan Al-Jumaiya,Event Organization Support,2024-09-27,4.5
+Tahani Al-Rufaie,Event Organization Support,2024-09-27,8.5
+Sarah Al-Sayyari,Event Organization Support,2024-09-27,8.5
+Abdullah Al-Mutairi,Event Organization Support,2024-09-27,6.5
+Haneen Hakim,Event Organization Support,2024-09-27,6.5
+Dima Al-Saeiri,Event Organization Support,2024-09-27,6.5
+Nawal Al-Kabkabi,Event Organization Support,2024-09-27,7.0
+Fahad Al-Qahtani,Event Organization Support,2024-09-27,9.0
+Saad Al-Qahtani,Event Organization Support,2024-09-27,8.5
+Mohammed Al-Qahtani,Event Organization Support,2024-09-27,8.5
+Badr Abdullah,Event Organization Support,2024-09-27,8.5
+Hanem Mohammed,Event Organization Support,2024-09-27,8.5
+Safiyyah Al-Zahrani,Event Organization Support,2024-09-27,8.5
+Sharifah Al-Yousef,Event Organization Support,2024-09-27,9.0
+Dan Al-Yafie,Event Organization Support,2024-09-27,6.0
+Amirah Al-Harbi,Event Organization Support,2024-09-27,7.0
+Mohammed Al-Munayea,Event Organization Support,2024-09-27,8.5
+Hassan Al-Mujallad,Event Organization Support,2024-09-27,7.0
+Reem Al-Mutairi,Event Organization Support,2024-09-27,7.0
+Tharaa Abdulshakour,Event Organization Support,2024-09-27,7.0
+Taghreed Al-Dosari,Event Organization Support,2024-09-27,7.0
+Rahaf Fahad,Event Organization Support,2024-09-27,7.0
+Sadeem Salem,Event Organization Support,2024-09-27,7.0
+Saria Ba Abdullah,Event Organization Support,2024-09-27,7.0
+Badriyah Al-Shammari,Event Organization Support,2024-09-27,7.0
+Ali Al-Jouei,Event Organization Support,2024-09-27,8.5
+Sarah Al-Otaibi,Event Organization Support,2024-09-27,7.0
+Samaa Al-Mazmoumi,Event Organization Support,2024-09-27,7.0
+Jawad Al-Zahrani,Event Organization Support,2024-09-27,7.0
+Wateen Al-Ghashmari,Event Organization Support,2024-09-27,7.0
+Abdulmalik Al-Nafisah,Event Organization Support,2024-09-27,8.5
+Hassan Al-Nafisah,Event Organization Support,2024-09-27,8.5
+Ziyad Al-Anazi,Event Organization Support,2024-09-27,7.0
+Dalal Al-Anazi,Event Organization Support,2024-09-27,7.0
+Ahmed Saeed,Event Organization Support,2024-09-27,5.0
+Tariq Amin,Event Organization Support,2024-09-27,5.0
+Mohammed Odeh,Event Organization Support,2024-09-27,5.0
+Samar,Event Organization Support,2024-09-27,5.0
+Othman Al-Buraiki,Event Organization Support,2024-09-27,5.0
+Mishari Al-Muhaysini (Photographer),Event Organization Support,2024-10-05,5.0
+Zahra Al-Hamoud,Event Organization Support,2024-10-05,5.0
+Mohammed Houldar,Event Organization Support,2024-10-05,5.0
+Hassan Al-Mujallad,Event Organization Support,2024-10-05,5.0
+Rayyan Al-Hammada,Event Organization Support,2024-10-05,5.0
+Ali Al-Qahtani,Event Organization Support,2024-10-05,5.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-01-20,1.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-02-27,1.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-03-01,2.0
+Ahmed Al-Mutairi,Sports Match Organization,2024-03-01,2.0
+Osama Al-Ghamdi,Sports Match Organization,2024-03-01,2.0
+Khalid Al-Nufaie,Sports Match Organization,2024-03-01,2.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-03-03,1.0
+Ahmed Al-Mutairi,Sports Match Organization,2024-03-03,1.0
+Osama Al-Ghamdi,Sports Match Organization,2024-03-03,1.0
+Khalid Al-Nufaie,Sports Match Organization,2024-03-03,1.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-03-31,1.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-05-25,1.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-06-22,1.0
+Mohammed Al-Zahrani,Sports Match Organization,2024-06-29,1.0
+Ahmed Saeed,Tutoring Sessions,2024-01-20,1.0
+Ibrahim Abbas,Tutoring Sessions,2024-01-20,2.0
+Tariq Amin,Tutoring Sessions,2024-01-20,1.0
+Issam Jaber,Tutoring Sessions,2024-01-20,1.0
+Mohammed Al-Ghazawi,Tutoring Sessions,2024-01-20,2.0
+Mohammed Sobhi,Tutoring Sessions,2024-01-20,1.0
+Mohammed Odeh,Tutoring Sessions,2024-01-20,1.0
+Samirah,Tutoring Sessions,2024-01-20,1.0
+Samiyah,Tutoring Sessions,2024-01-20,2.0
+Bushra Al-Qufail,Tutoring Sessions,2024-01-20,2.0
+Samar,Tutoring Sessions,2024-01-20,1.0
+Mahmoud Mahdi,Tutoring Sessions,2024-01-20,2.0
+Ahmed Al-Sadiq,Tutoring Sessions,2024-01-20,4.0
+Othman Al-Buraiki,Tutoring Sessions,2024-01-20,1.0
+Fahad Abdullah,Tutoring Sessions,2024-01-20,2.0
+Abdullah Sulaiman,Tutoring Sessions,2024-01-20,2.0
+Amani Al-Otaibi,Tutoring Sessions,2024-01-20,1.0
+Ahmed Saeed,Tutoring Sessions,2024-02-27,1.0
+Ibrahim Abbas,Tutoring Sessions,2024-02-27,2.0
+Ashjan,Tutoring Sessions,2024-02-27,2.0
+Barak Bakhreesah,Tutoring Sessions,2024-02-27,1.0
+Tariq Amin,Tutoring Sessions,2024-02-27,1.0
+Issam Jaber,Tutoring Sessions,2024-02-27,1.0
+Mohammed Al-Ghazawi,Tutoring Sessions,2024-02-27,2.0
+Mohammed Sobhi,Tutoring Sessions,2024-02-27,1.0
+Mohammed Odeh,Tutoring Sessions,2024-02-27,1.0
+Samirah,Tutoring Sessions,2024-02-27,1.0
+Samiyah,Tutoring Sessions,2024-02-27,1.0
+Bushra Al-Qufail,Tutoring Sessions,2024-02-27,2.0
+Samar,Tutoring Sessions,2024-02-27,1.0
+Abdullah,Tutoring Sessions,2024-02-27,1.0
+Mahmoud Mahdi,Tutoring Sessions,2024-02-27,2.0
+Ahmed Al-Sadiq,Tutoring Sessions,2024-02-27,2.0
+Othman Al-Buraiki,Tutoring Sessions,2024-02-27,1.0
+Fahad Abdullah,Tutoring Sessions,2024-02-27,1.0
+Abdullah Sulaiman,Tutoring Sessions,2024-02-27,2.0
+Amani Al-Otaibi,Tutoring Sessions,2024-02-27,1.0
+Ahmed Saeed,Tutoring Sessions,2024-03-01,1.0
+Ibrahim Abbas,Tutoring Sessions,2024-03-01,2.0
+Ashjan,Tutoring Sessions,2024-03-01,2.0
+Barak Bakhreesah,Tutoring Sessions,2024-03-01,1.0
+Tariq Amin,Tutoring Sessions,2024-03-01,1.0
+Issam Jaber,Tutoring Sessions,2024-03-01,1.0
+Mohammed Al-Ghazawi,Tutoring Sessions,2024-03-01,2.0
+Mohammed Sobhi,Tutoring Sessions,2024-03-01,1.0
+Mohammed Odeh,Tutoring Sessions,2024-03-01,2.0
+Samirah,Tutoring Sessions,2024-03-01,5.0
+Samiyah,Tutoring Sessions,2024-03-01,1.0
+Bushra Al-Qufail,Tutoring Sessions,2024-03-01,2.0
+Samar,Tutoring Sessions,2024-03-01,1.0
+Abdullah,Tutoring Sessions,2024-03-01,1.0
+Mahmoud Mahdi,Tutoring Sessions,2024-03-01,2.0
+Ahmed Al-Sadiq,Tutoring Sessions,2024-03-01,2.0
+Othman Al-Buraiki,Tutoring Sessions,2024-03-01,1.0
+Fahad Abdullah,Tutoring Sessions,2024-03-01,1.0
+Abdullah Sulaiman,Tutoring Sessions,2024-03-01,1.0
+Amani Al-Otaibi,Tutoring Sessions,2024-03-01,1.0
+Ahmed Saeed,Tutoring Sessions,2024-03-03,1.0
+Ibrahim Abbas,Tutoring Sessions,2024-03-03,2.0
+Ashjan,Tutoring Sessions,2024-03-03,2.0
+Barak Bakhreesah,Tutoring Sessions,2024-03-03,1.0
+Tariq Amin,Tutoring Sessions,2024-03-03,1.0
+Issam Jaber,Tutoring Sessions,2024-03-03,1.0
+Mohammed Al-Ghazawi,Tutoring Sessions,2024-03-03,2.0
+Mohammed Sobhi,Tutoring Sessions,2024-03-03,1.0
+Mohammed Odeh,Tutoring Sessions,2024-03-03,5.0
+Samirah,Tutoring Sessions,2024-03-03,2.0
+Samiyah,Tutoring Sessions,2024-03-03,1.0
+Bushra Al-Qufail,Tutoring Sessions,2024-03-03,2.0
+Samar,Tutoring Sessions,2024-03-03,1.0
+Abdullah,Tutoring Sessions,2024-03-03,1.0
+Mahmoud Mahdi,Tutoring Sessions,2024-03-03,2.0
+Ahmed Al-Sadiq,Tutoring Sessions,2024-03-03,5.0
+Othman Al-Buraiki,Tutoring Sessions,2024-03-03,1.0
+Fahad Abdullah,Tutoring Sessions,2024-03-03,1.0
+Abdullah Sulaiman,Tutoring Sessions,2024-03-03,1.0
+Amani Al-Otaibi,Tutoring Sessions,2024-03-03,1.0
+Ahmed Saeed,Tutoring Sessions,2024-03-31,3.0
+Ibrahim Abbas,Tutoring Sessions,2024-03-31,2.0
+Ashjan,Tutoring Sessions,2024-03-31,2.0
+Barak Bakhreesah,Tutoring Sessions,2024-03-31,1.0
+Tariq Amin,Tutoring Sessions,2024-03-31,1.0
+Issam Jaber,Tutoring Sessions,2024-03-31,1.0
+Mohammed Al-Ghazawi,Tutoring Sessions,2024-03-31,1.0
+Mohammed Sobhi,Tutoring Sessions,2024-03-31,1.0
+Mohammed Odeh,Tutoring Sessions,2024-03-31,5.0
+Samirah,Tutoring Sessions,2024-03-31,5.0
+Samiyah,Tutoring Sessions,2024-03-31,1.0
+Bushra Al-Qufail,Tutoring Sessions,2024-03-31,2.0
+Samar,Tutoring Sessions,2024-03-31,1.0
+Abdullah,Tutoring Sessions,2024-03-31,1.0
+Mahmoud Mahdi,Tutoring Sessions,2024-03-31,5.0
+Ahmed Al-Sadiq,Tutoring Sessions,2024-03-31,5.0
+Othman Al-Buraiki,Tutoring Sessions,2024-03-31,1.0
+Fahad Abdullah,Tutoring Sessions,2024-03-31,1.0
+Abdullah Sulaiman,Tutoring Sessions,2024-03-31,1.0
+Amani Al-Otaibi,Tutoring Sessions,2024-03-31,1.0
+Ahmed Saeed,Tutoring Sessions,2024-05-25,1.0
+Ibrahim Abbas,Tutoring Sessions,2024-05-25,2.0
+Ashjan,Tutoring Sessions,2024-05-25,2.0
+Barak Bakhreesah,Tutoring Sessions,2024-05-25,1.0
+Tariq Amin,Tutoring Sessions,2024-05-25,1.0
+Issam Jaber,Tutoring Sessions,2024-05-25,1.0
+Mohammed Al-Ghazawi,Tutoring Sessions,2024-05-25,2.0
+Mohammed Sobhi,Tutoring Sessions,2024-05-25,1.0
+Mohammed Odeh,Tutoring Sessions,2024-05-25,5.0
+Samirah,Tutoring Sessions,2024-05-25,1.0
+Samiyah,Tutoring Sessions,2024-05-25,1.0
+Bushra Al-Qufail,Tutoring Sessions,2024-05-25,2.0
+Samar,Tutoring Sessions,2024-05-25,1.0
+Abdullah,Tutoring Sessions,2024-05-25,1.0
+Mahmoud Mahdi,Tutoring Sessions,2024-05-25,3.0
+Ahmed Al-Sadiq,Tutoring Sessions,2024-05-25,5.0
+Othman Al-Buraiki,Tutoring Sessions,2024-05-25,1.0
+Fahad Abdullah,Tutoring Sessions,2024-05-25,1.0
+Abdullah Sulaiman,Tutoring Sessions,2024-05-25,1.0
+Amani Al-Otaibi,Tutoring Sessions,2024-05-25,2.0
+Ahmed Saeed,Tutoring Sessions,2024-06-22,1.0
+Ibrahim Abbas,Tutoring Sessions,2024-06-22,5.0
+Ashjan,Tutoring Sessions,2024-06-22,2.0
+Barak Bakhreesah,Tutoring Sessions,2024-06-22,1.0
+Tariq Amin,Tutoring Sessions,2024-06-22,1.0
+Issam Jaber,Tutoring Sessions,2024-06-22,1.0
+Mohammed Al-Ghazawi,Tutoring Sessions,2024-06-22,2.0
+Mohammed Sobhi,Tutoring Sessions,2024-06-22,1.0
+Mohammed Odeh,Tutoring Sessions,2024-06-22,5.0
+Samirah,Tutoring Sessions,2024-06-22,5.0
+Samiyah,Tutoring Sessions,2024-06-22,2.0
+Bushra Al-Qufail,Tutoring Sessions,2024-06-22,2.0
+Samar,Tutoring Sessions,2024-06-22,1.0
+Abdullah,Tutoring Sessions,2024-06-22,1.0
+Mahmoud Mahdi,Tutoring Sessions,2024-06-22,2.0
+Ahmed Al-Sadiq,Tutoring Sessions,2024-06-22,5.0
+Fahad Abdullah,Tutoring Sessions,2024-06-22,1.0
+Abdullah Sulaiman,Tutoring Sessions,2024-06-22,2.0
+Amani Al-Otaibi,Tutoring Sessions,2024-06-22,2.0
