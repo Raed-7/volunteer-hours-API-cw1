@@ -47,6 +47,142 @@ def home() -> str:
                 --focus: #facc15;
             }
 
+            /* ── Colour-blind mode: high-contrast greyscale ─────────────────────── */
+html.cb-mode {
+    --primary: #ffffff;
+    --primary-2: #cccccc;
+    --focus: #ffffff;
+}
+
+html.cb-mode body {
+    background: #000000;
+}
+
+html.cb-mode .hero {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+html.cb-mode .badge {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+html.cb-mode .btn-primary {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: none;
+}
+
+html.cb-mode .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+}
+
+html.cb-mode .stat-card,
+html.cb-mode .card,
+html.cb-mode .panel {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+html.cb-mode .a11y-cb-btn.a11y-active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}
+
+            /* ── Accessibility toolbar ─────────── */
+            #a11y-bar {
+                position: fixed;
+                top: 14px;
+                right: 16px;
+                z-index: 999;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(15, 23, 42, 0.88);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 14px;
+                padding: 8px 14px;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+            }
+
+            .a11y-label {
+                font-size: 0.7rem;
+                color: #94a3b8;
+                font-weight: 700;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                margin-right: 2px;
+                font-family: Inter, Arial, sans-serif;
+            }
+
+            .a11y-group {
+                display: flex;
+                gap: 4px;
+            }
+
+            .a11y-btn {
+                background: rgba(255, 255, 255, 0.07);
+                border: 1px solid rgba(255, 255, 255, 0.13);
+                color: #e5e7eb;
+                border-radius: 8px;
+                padding: 5px 10px;
+                cursor: pointer;
+                font-weight: 700;
+                font-family: Inter, Arial, sans-serif;
+                transition: background 0.15s, border-color 0.15s;
+                line-height: 1;
+            }
+
+            .a11y-btn:hover {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.25);
+            }
+
+            .a11y-btn:focus {
+                outline: 2px solid var(--focus);
+                outline-offset: 2px;
+            }
+
+            .a11y-btn.a11y-active {
+                background: rgba(59, 130, 246, 0.32);
+                border-color: rgba(96, 165, 250, 0.55);
+                color: #bfdbfe;
+            }
+
+            .a11y-divider {
+                width: 1px;
+                height: 22px;
+                background: rgba(255, 255, 255, 0.12);
+                flex-shrink: 0;
+            }
+
+            .a11y-cb-btn {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                padding: 5px 12px;
+                font-size: 0.8rem;
+            }
+
+            .a11y-cb-btn.a11y-active {
+                background: rgba(245, 158, 11, 0.22);
+                border-color: rgba(245, 158, 11, 0.5);
+                color: #fde68a;
+            }
+
+            /* Text size button visual scale */
+            .a11y-txt-sm { font-size: 0.75rem; }
+            .a11y-txt-md { font-size: 0.88rem; }
+            .a11y-txt-lg { font-size: 1.05rem; }
+
+            /* ── Base layout ────────── */
             html {
                 scroll-behavior: smooth;
             }
@@ -258,10 +394,55 @@ def home() -> str:
                 .hero {
                     padding: 28px;
                 }
+                #a11y-bar {
+                    top: 10px;
+                    right: 10px;
+                    padding: 6px 10px;
+                    gap: 6px;
+                }
+                .a11y-label {
+                    display: none;
+                }
             }
         </style>
     </head>
     <body>
+
+        <!-- Accessibility controls -->
+        <div id="a11y-bar" role="region" aria-label="Accessibility controls">
+            <span class="a11y-label" aria-hidden="true">Accessibility</span>
+
+            <div class="a11y-group" role="group" aria-label="Text size">
+                <button class="a11y-btn a11y-txt-sm" id="txt-sm"
+                        onclick="a11ySize('small')"
+                        aria-label="Small text size"
+                        title="Small text">A</button>
+                <button class="a11y-btn a11y-txt-md a11y-active" id="txt-md"
+                        onclick="a11ySize('medium')"
+                        aria-label="Medium text size (default)"
+                        title="Medium text">A</button>
+                <button class="a11y-btn a11y-txt-lg" id="txt-lg"
+                        onclick="a11ySize('large')"
+                        aria-label="Large text size"
+                        title="Large text">A</button>
+            </div>
+
+            <div class="a11y-divider" aria-hidden="true"></div>
+
+            <button class="a11y-btn a11y-cb-btn" id="cb-toggle"
+                    onclick="a11yCB()"
+                    aria-pressed="false"
+                    aria-label="Toggle colour-blind friendly mode"
+                    title="Colour-blind friendly mode">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
+                </svg>
+                CB Mode
+            </button>
+        </div>
+
         <a class="skip-link" href="#main-content">Skip to main content</a>
 
         <main id="main-content" class="page">
@@ -338,6 +519,52 @@ def home() -> str:
                 </aside>
             </section>
         </main>
+
+        <script>
+            (function () {
+                'use strict';
+
+                function a11ySize(size) {
+                    var sizes  = { small: '13px', medium: '16px', large: '20px' };
+                    var btnIds = { small: 'txt-sm', medium: 'txt-md', large: 'txt-lg' };
+                    document.documentElement.style.fontSize = sizes[size] || '16px';
+                    try { localStorage.setItem('a11y-size', size); } catch (e) {}
+                    ['txt-sm', 'txt-md', 'txt-lg'].forEach(function (id) {
+                        document.getElementById(id).classList.remove('a11y-active');
+                    });
+                    var target = document.getElementById(btnIds[size]);
+                    if (target) { target.classList.add('a11y-active'); }
+                }
+
+                function a11yCB() {
+                    var on  = document.documentElement.classList.toggle('cb-mode');
+                    var btn = document.getElementById('cb-toggle');
+                    btn.setAttribute('aria-pressed', String(on));
+                    btn.classList.toggle('a11y-active', on);
+                    try { localStorage.setItem('a11y-cb', on ? '1' : '0'); } catch (e) {}
+                }
+
+                // Restore saved preferences on load
+                var savedSize = 'medium';
+                try { savedSize = localStorage.getItem('a11y-size') || 'medium'; } catch (e) {}
+                a11ySize(savedSize);
+
+                var cbOn = false;
+                try { cbOn = localStorage.getItem('a11y-cb') === '1'; } catch (e) {}
+                if (cbOn) {
+                    document.documentElement.classList.add('cb-mode');
+                    var cbBtn = document.getElementById('cb-toggle');
+                    if (cbBtn) {
+                        cbBtn.setAttribute('aria-pressed', 'true');
+                        cbBtn.classList.add('a11y-active');
+                    }
+                }
+
+                // Expose to global scope for inline onclick handlers
+                window.a11ySize = a11ySize;
+                window.a11yCB  = a11yCB;
+            }());
+        </script>
     </body>
     </html>
     """
