@@ -4,9 +4,23 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import HTMLResponse, JSONResponse
 
 
-from app.routers import auth, events, volunteers, shifts, work_logs, imports, analytics, stats
+from app.routers import (
+    auth,
+    events,
+    volunteers,
+    shifts,
+    work_logs,
+    imports,
+    analytics,
+    stats,
+)
 
-app = FastAPI(title="Volunteer Hours Management API", version="0.1.0", docs_url=None, redoc_url=None)
+app = FastAPI(
+    title="Volunteer Hours Management API",
+    version="0.1.0",
+    docs_url=None,
+    redoc_url=None,
+)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -17,6 +31,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             "errors": exc.errors(),
         },
     )
+
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 def home() -> str:
@@ -48,51 +63,51 @@ def home() -> str:
             }
 
             /* ── Colour-blind mode: high-contrast greyscale ─────────────────────── */
-html.cb-mode {
-    --primary: #ffffff;
-    --primary-2: #cccccc;
-    --focus: #ffffff;
-}
+            html.cb-mode {
+                --primary: #ffffff;
+                --primary-2: #cccccc;
+                --focus: #ffffff;
+            }
 
-html.cb-mode body {
-    background: #000000;
-}
+            html.cb-mode body {
+                background: #000000;
+            }
 
-html.cb-mode .hero {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.3);
-}
+            html.cb-mode .hero {
+                background: rgba(255, 255, 255, 0.06);
+                border-color: rgba(255, 255, 255, 0.3);
+            }
 
-html.cb-mode .badge {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-}
+            html.cb-mode .badge {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.4);
+                color: #ffffff;
+            }
 
-html.cb-mode .btn-primary {
-    background: #ffffff;
-    color: #000000;
-    box-shadow: none;
-}
+            html.cb-mode .btn-primary {
+                background: #ffffff;
+                color: #000000;
+                box-shadow: none;
+            }
 
-html.cb-mode .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.35);
-    color: #ffffff;
-}
+            html.cb-mode .btn-secondary {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.35);
+                color: #ffffff;
+            }
 
-html.cb-mode .stat-card,
-html.cb-mode .card,
-html.cb-mode .panel {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.25);
-}
+            html.cb-mode .stat-card,
+            html.cb-mode .card,
+            html.cb-mode .panel {
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.25);
+            }
 
-html.cb-mode .a11y-cb-btn.a11y-active {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: #ffffff;
-}
+            html.cb-mode .a11y-cb-btn.a11y-active {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.5);
+                color: #ffffff;
+            }
 
             /* ── Accessibility toolbar ─────────── */
             #a11y-bar {
@@ -510,7 +525,7 @@ html.cb-mode .a11y-cb-btn.a11y-active {
                     <h2>Quick Access</h2>
                     <ul>
                         <li><strong>/docs</strong> — interactive Swagger interface</li>
-                        <li><strong>/stats</strong> — overall project totals</li>
+                        <li><strong>/Dashboard</strong> — admin stats dashboard</li>
                         <li><strong>/health</strong> — service status check</li>
                     </ul>
                     <p class="footer-note">
@@ -569,6 +584,394 @@ html.cb-mode .a11y-cb-btn.a11y-active {
     </html>
     """
 
+@app.get("/dashboard", response_class=HTMLResponse, include_in_schema=False)
+def dashboard() -> str:
+    return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Dashboard — Volunteer Hours API</title>
+        <style>
+            * { box-sizing: border-box; margin: 0; padding: 0; }
+
+            :root {
+                --bg-1: #0f172a;
+                --bg-2: #111827;
+                --primary: #3b82f6;
+                --focus: #facc15;
+                --text: #e5e7eb;
+                --muted: #94a3b8;
+            }
+
+            body {
+                font-family: Inter, Arial, sans-serif;
+                background:
+                    radial-gradient(circle at top left, #1d4ed8 0%, transparent 30%),
+                    radial-gradient(circle at top right, #7c3aed 0%, transparent 25%),
+                    linear-gradient(135deg, #0f172a 0%, #111827 50%, #1e293b 100%);
+                color: var(--text);
+                min-height: 100vh;
+                padding: 40px 24px 60px;
+            }
+
+            .page {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+            .back {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                color: #94a3b8;
+                text-decoration: none;
+                font-size: 0.9rem;
+                margin-bottom: 28px;
+                transition: color 0.15s;
+            }
+
+            .back:hover { color: #e5e7eb; }
+            .back:focus { outline: 2px solid var(--focus); border-radius: 4px; }
+
+            .header {
+                margin-bottom: 32px;
+            }
+
+            .header h1 {
+                font-size: clamp(1.6rem, 3vw, 2.4rem);
+                color: #ffffff;
+                margin-bottom: 6px;
+            }
+
+            .header p {
+                color: #94a3b8;
+                font-size: 0.95rem;
+            }
+
+            /* Token input panel */
+            .auth-panel {
+                background: rgba(255,255,255,0.07);
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 20px;
+                padding: 28px;
+                margin-bottom: 32px;
+                backdrop-filter: blur(12px);
+            }
+
+            .auth-panel label {
+                display: block;
+                font-size: 0.82rem;
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: #94a3b8;
+                margin-bottom: 10px;
+            }
+
+            .input-row {
+                display: flex;
+                gap: 10px;
+            }
+
+            .token-input {
+                flex: 1;
+                background: rgba(0,0,0,0.35);
+                border: 1px solid rgba(255,255,255,0.14);
+                border-radius: 12px;
+                padding: 12px 16px;
+                color: #e5e7eb;
+                font-size: 0.9rem;
+                font-family: 'Courier New', monospace;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+
+            .token-input:focus {
+                border-color: rgba(59,130,246,0.6);
+                box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+            }
+
+            .token-input::placeholder { color: #475569; }
+
+            .load-btn {
+                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                color: white;
+                border: none;
+                border-radius: 12px;
+                padding: 12px 24px;
+                font-weight: 700;
+                font-size: 0.9rem;
+                cursor: pointer;
+                font-family: Inter, Arial, sans-serif;
+                transition: transform 0.15s, opacity 0.15s;
+                white-space: nowrap;
+            }
+
+            .load-btn:hover { transform: translateY(-1px); opacity: 0.92; }
+            .load-btn:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+            .load-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+            .hint {
+                margin-top: 10px;
+                font-size: 0.82rem;
+                color: #475569;
+            }
+
+            .hint a {
+                color: #60a5fa;
+                text-decoration: none;
+            }
+
+            .hint a:hover { text-decoration: underline; }
+
+            /* Error */
+            #error-msg {
+                display: none;
+                background: rgba(239,68,68,0.12);
+                border: 1px solid rgba(239,68,68,0.35);
+                border-radius: 12px;
+                padding: 14px 18px;
+                color: #fca5a5;
+                font-size: 0.9rem;
+                margin-bottom: 24px;
+            }
+
+            /* Stats grid */
+            #stats-grid {
+                display: none;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+
+            #stats-grid.visible { display: grid; }
+
+            .stat-card {
+                background: rgba(255,255,255,0.07);
+                border: 1px solid rgba(255,255,255,0.11);
+                border-radius: 20px;
+                padding: 24px;
+                backdrop-filter: blur(10px);
+                transition: transform 0.2s, border-color 0.2s;
+                animation: fadeUp 0.4s ease both;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-3px);
+                border-color: rgba(59,130,246,0.35);
+            }
+
+            @keyframes fadeUp {
+                from { opacity: 0; transform: translateY(16px); }
+                to   { opacity: 1; transform: translateY(0); }
+            }
+
+            .stat-card:nth-child(1) { animation-delay: 0.05s; }
+            .stat-card:nth-child(2) { animation-delay: 0.10s; }
+            .stat-card:nth-child(3) { animation-delay: 0.15s; }
+            .stat-card:nth-child(4) { animation-delay: 0.20s; }
+            .stat-card:nth-child(5) { animation-delay: 0.25s; }
+            .stat-card:nth-child(6) { animation-delay: 0.30s; }
+
+            .stat-icon {
+                font-size: 1.6rem;
+                margin-bottom: 12px;
+            }
+
+            .stat-label {
+                font-size: 0.78rem;
+                font-weight: 700;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: #64748b;
+                margin-bottom: 6px;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+                font-weight: 800;
+                color: #ffffff;
+                line-height: 1;
+                margin-bottom: 4px;
+            }
+
+            .stat-sub {
+                font-size: 0.82rem;
+                color: #64748b;
+            }
+
+            .stat-card.blue  { border-color: rgba(59,130,246,0.25); }
+            .stat-card.green { border-color: rgba(34,197,94,0.22); }
+            .stat-card.purple{ border-color: rgba(168,85,247,0.22); }
+            .stat-card.amber { border-color: rgba(245,158,11,0.22); }
+            .stat-card.teal  { border-color: rgba(20,184,166,0.22); }
+            .stat-card.rose  { border-color: rgba(244,63,94,0.22); }
+
+            .stat-card.blue   .stat-value { color: #93c5fd; }
+            .stat-card.green  .stat-value { color: #86efac; }
+            .stat-card.purple .stat-value { color: #d8b4fe; }
+            .stat-card.amber  .stat-value { color: #fcd34d; }
+            .stat-card.teal   .stat-value { color: #5eead4; }
+            .stat-card.rose   .stat-value { color: #fda4af; }
+
+            /* Loaded timestamp */
+            #loaded-at {
+                display: none;
+                text-align: right;
+                font-size: 0.8rem;
+                color: #475569;
+                margin-top: 8px;
+            }
+
+            #loaded-at.visible { display: block; }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+
+            <a class="back" href="/" aria-label="Back to homepage">
+                &#x2190; Back to homepage
+            </a>
+
+            <div class="header">
+                <h1>&#x1F4CA; Admin Statistics Dashboard</h1>
+                <p>Paste your JWT token below to view live system totals. Token is never stored.</p>
+            </div>
+
+            <div class="auth-panel">
+                <label for="token-field">Bearer Token</label>
+                <div class="input-row">
+                    <input
+                        id="token-field"
+                        class="token-input"
+                        type="password"
+                        placeholder="Paste your JWT token here..."
+                        autocomplete="off"
+                        spellcheck="false"
+                    />
+                    <button class="load-btn" id="load-btn" onclick="loadStats()">
+                        Load Stats
+                    </button>
+                </div>
+                <p class="hint">
+                    Get your token from <a href="/docs" target="_blank">/docs</a>
+                    &rarr; POST /auth/login &rarr; copy the <code>access_token</code> value.
+                </p>
+            </div>
+
+            <div id="error-msg" role="alert"></div>
+
+            <div id="stats-grid" aria-live="polite">
+                <div class="stat-card blue">
+                    <div class="stat-icon">&#x1F465;</div>
+                    <div class="stat-label">Volunteers</div>
+                    <div class="stat-value" id="val-volunteers">—</div>
+                    <div class="stat-sub">registered volunteers</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">&#x1F4C5;</div>
+                    <div class="stat-label">Events</div>
+                    <div class="stat-value" id="val-events">—</div>
+                    <div class="stat-sub">total events</div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">&#x23F0;</div>
+                    <div class="stat-label">Shifts</div>
+                    <div class="stat-value" id="val-shifts">—</div>
+                    <div class="stat-sub">scheduled shifts</div>
+                </div>
+                <div class="stat-card amber">
+                    <div class="stat-icon">&#x1F4DD;</div>
+                    <div class="stat-label">Work Logs</div>
+                    <div class="stat-value" id="val-logs">—</div>
+                    <div class="stat-sub">attendance records</div>
+                </div>
+                <div class="stat-card teal">
+                    <div class="stat-icon">&#x23F3;</div>
+                    <div class="stat-label">Worked Minutes</div>
+                    <div class="stat-value" id="val-minutes">—</div>
+                    <div class="stat-sub">total minutes logged</div>
+                </div>
+                <div class="stat-card rose">
+                    <div class="stat-icon">&#x1F3C6;</div>
+                    <div class="stat-label">Worked Hours</div>
+                    <div class="stat-value" id="val-hours">—</div>
+                    <div class="stat-sub">total hours contributed</div>
+                </div>
+            </div>
+
+            <div id="loaded-at"></div>
+
+        </div>
+
+        <script>
+            // Allow Enter key to trigger load
+            document.getElementById('token-field').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') loadStats();
+            });
+
+            async function loadStats() {
+                var token = document.getElementById('token-field').value.trim();
+                var errEl = document.getElementById('error-msg');
+                var grid  = document.getElementById('stats-grid');
+                var btn   = document.getElementById('load-btn');
+                var ts    = document.getElementById('loaded-at');
+
+                errEl.style.display = 'none';
+
+                if (!token) {
+                    errEl.textContent = 'Please paste your JWT token before loading.';
+                    errEl.style.display = 'block';
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Loading...';
+
+                try {
+                    var res = await fetch('/stats', {
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+
+                    if (res.status === 401 || res.status === 403) {
+                        throw new Error('Invalid or expired token. Please log in again via /docs.');
+                    }
+                    if (!res.ok) {
+                        throw new Error('Server error (' + res.status + '). Please try again.');
+                    }
+
+                    var data = await res.json();
+
+                    document.getElementById('val-volunteers').textContent = data.total_volunteers.toLocaleString();
+                    document.getElementById('val-events').textContent     = data.total_events.toLocaleString();
+                    document.getElementById('val-shifts').textContent     = data.total_shifts.toLocaleString();
+                    document.getElementById('val-logs').textContent       = data.total_work_logs.toLocaleString();
+                    document.getElementById('val-minutes').textContent    = data.total_worked_minutes.toLocaleString();
+                    document.getElementById('val-hours').textContent      = data.total_worked_hours.toLocaleString();
+
+                    grid.classList.add('visible');
+
+                    var now = new Date();
+                    ts.textContent = 'Last loaded: ' + now.toLocaleTimeString();
+                    ts.classList.add('visible');
+
+                } catch (err) {
+                    errEl.textContent = err.message;
+                    errEl.style.display = 'block';
+                    grid.classList.remove('visible');
+                    ts.classList.remove('visible');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Load Stats';
+                }
+            }
+        </script>
+    </body>
+    </html>
+    """
+
 @app.get("/docs", include_in_schema=False)
 def custom_swagger_ui():
     return get_swagger_ui_html(
@@ -594,6 +997,7 @@ app.include_router(work_logs.router)
 app.include_router(imports.router)
 app.include_router(analytics.router)
 app.include_router(stats.router)
+
 
 @app.get("/health", tags=["health"])
 def health_check() -> dict[str, str]:
