@@ -88,6 +88,13 @@ Admin-only CSV import endpoints:
 * `GET /analytics/volunteers/{volunteer_id}/summary`
 * `GET /stats`
 
+### Homepage and accessibility
+
+* Custom homepage at `/`
+* Accessibility toolbar with text size controls (small / medium / large)
+* High-contrast greyscale colour-blind mode toggle (WCAG 2.1 Level AAA, 21:1 contrast ratio)
+* Admin statistics dashboard at `/dashboard` — admins paste their JWT token to view live system totals
+
 ## Worked-hours logic
 
 Worked time is calculated from `checked_in_at` and `checked_out_at`, capped to the shift boundaries.
@@ -172,8 +179,9 @@ uvicorn app.main:app --reload
 
 ### 8. Open the project
 
-* Homepage: `http://127.0.0.1:8000/`
-* API Docs: `http://127.0.0.1:8000/docs`
+* Homepage: `https://volunteer-hours-api-cw1.onrender.com/`
+* API Docs: `https://volunteer-hours-api-cw1.onrender.com/docs`
+* Admin Dashboard: `https://volunteer-hours-api-cw1.onrender.com/dashboard`
 
 ## Running tests
 
@@ -244,6 +252,15 @@ These datasets were prepared from previous volunteering records and are used to 
 - `events_import_template_en.csv`
 - `attendance_import_template_en.csv`
 
+## Live deployment
+
+The API is deployed and accessible at:
+
+* **Homepage:** https://volunteer-hours-api-cw1.onrender.com/
+* **API Docs:** https://volunteer-hours-api-cw1.onrender.com/docs
+* **Admin Dashboard:** https://volunteer-hours-api-cw1.onrender.com/dashboard
+* **Health Check:** https://volunteer-hours-api-cw1.onrender.com/health
+
 ## Notes
 
 * The base URL `/` now provides a homepage for the project
@@ -251,6 +268,14 @@ These datasets were prepared from previous volunteering records and are used to 
 * Import endpoints are admin-protected
 * Analytics results are most useful after importing volunteer, event, and attendance data
 
-## Final note
+## Deployment
 
+The project is deployed on Render using native ASGI (no WSGI wrapper needed).
+
+* Runtime: Python 3.11.9
+* Build command: `pip install -r requirements.txt && alembic upgrade head`
+* Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+* Database: SQLite (ephemeral on Render free tier — re-import datasets after each deploy)
+
+## Final note
 This project was prepared for coursework submission and oral demonstration.

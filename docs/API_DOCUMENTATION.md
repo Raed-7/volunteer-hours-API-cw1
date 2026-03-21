@@ -15,19 +15,28 @@ The **Volunteer Hours Management API** is a FastAPI backend for managing:
 
 This API is designed for event organisers who need to track volunteer work accurately and generate useful summaries from stored data.
 
-## Base URL
+---
 
-Local development base URL:
+## Live Deployment
+
+The API is deployed and publicly accessible at:
+
+- **Homepage:** https://volunteer-hours-api-cw1.onrender.com/
+- **API Docs:** https://volunteer-hours-api-cw1.onrender.com/docs
+- **Admin Dashboard:** https://volunteer-hours-api-cw1.onrender.com/dashboard
+- **Health Check:** https://volunteer-hours-api-cw1.onrender.com/health
+
+> Note: The free tier may take up to 50 seconds to respond after a period of inactivity. Visit the homepage first to wake the server before testing.
+
+## Local Base URL
 
 `http://127.0.0.1:8000`
 
-Interactive API docs:
+Interactive API docs: `/docs`
 
-- `/docs`
+Homepage: `/`
 
-Homepage:
-
-- `/`
+Admin Dashboard: `/dashboard`
 
 ---
 
@@ -41,9 +50,7 @@ Most routes are protected and require a valid JWT access token.
 2. Log in with `POST /auth/login`
 3. Copy the returned `access_token`
 4. In Swagger `/docs`, click **Authorize**
-5. Paste:
-
-`Bearer YOUR_ACCESS_TOKEN`
+5. Paste: `Bearer YOUR_ACCESS_TOKEN`
 
 ### Roles
 
@@ -54,24 +61,26 @@ Supported roles:
 
 ### Admin-only functionality
 
-These routes are intended for admin users:
+These routes are restricted to admin users:
 
-- import endpoints
+- all import endpoints (`/imports/*`)
+- volunteer deletion
 
 ---
 
 ## Route Groups
 
-- `/`
-- `/auth`
-- `/volunteers`
-- `/events`
-- `/shifts`
-- `/work-logs`
-- `/imports`
-- `/analytics`
-- `/stats`
-- `/health`
+- `/` — homepage
+- `/dashboard` — admin statistics dashboard
+- `/auth` — authentication
+- `/volunteers` — volunteer management
+- `/events` — event management
+- `/shifts` — shift management
+- `/work-logs` — work log management
+- `/imports` — CSV import (admin only)
+- `/analytics` — leaderboard, awards, summaries
+- `/stats` — system totals
+- `/health` — health check
 
 ---
 
@@ -81,7 +90,28 @@ These routes are intended for admin users:
 
 ### `GET /`
 
-Returns a simple homepage for the project with links to important routes such as `/docs` and `/health`.
+Returns the project homepage with links to key routes, feature cards, and an accessibility toolbar. The homepage includes:
+
+- text size controls (small / medium / large)
+- high-contrast greyscale colour-blind mode (WCAG 2.1 Level AAA)
+- navigation links to `/docs`, `/dashboard`, and `/health`
+
+---
+
+## Admin Dashboard
+
+### `GET /dashboard`
+
+Returns an interactive HTML dashboard page. Paste a valid admin JWT token to load live system-wide statistics displayed as visual cards:
+
+- total volunteers
+- total events
+- total shifts
+- total work logs
+- total worked minutes
+- total worked hours
+
+The token is sent via a client-side fetch request and is never stored.
 
 ---
 
@@ -97,6 +127,7 @@ Simple health check endpoint.
 {
   "status": "ok"
 }
+```
 
 ---
 
@@ -384,7 +415,7 @@ Worked time is calculated automatically using shift boundaries:
 
 This prevents over-counting outside the planned shift window.
 
-### Validation behavior
+### Validation behaviour
 
 Examples of rejected cases:
 
@@ -395,7 +426,7 @@ Examples of rejected cases:
 
 ## Imports
 
-These routes are intended for admin users.
+These routes are restricted to admin users.
 
 ### `POST /imports/volunteers`
 
@@ -409,56 +440,33 @@ Upload a CSV file of events.
 
 Upload a CSV file of attendance/work-log data.
 
-### Flexible import behavior
-
-The import system supports flexible spreadsheet structures.
+### Flexible import behaviour
 
 #### Volunteers import
 
-The volunteers importer can work with alternate column names such as:
+Supports alternate column names including:
 
-- `volunteer_no`
-- `volunteer_id`
-- `volunteer_number`
-- `full_name`
-- `volunteer_name`
-- `email`
-- `mail`
-- `phone`
-- `mobile`
+- `volunteer_no`, `volunteer_id`, `volunteer_number`
+- `full_name`, `volunteer_name`
+- `email`, `mail`
+- `phone`, `mobile`
 
-It can also import volunteers when email or phone is missing, as long as a usable name exists.
+Can import volunteers when email or phone is missing, as long as a usable name exists.
 
 #### Events import
 
-The events importer supports alternate column names such as:
+Supports alternate column names including:
 
-- `event_title`
-- `title`
-- `event_name`
-- `event_date`
-- `date`
-- `location`
-- `venue`
-- `description`
-- `details`
+- `event_title`, `title`, `event_name`
+- `event_date`, `date`
+- `location`, `venue`
+- `description`, `details`
 
-It also supports more than one date format, including:
-
-- `YYYY-MM-DD`
-- `DD/MM/YYYY`
+Supports multiple date formats: `YYYY-MM-DD` and `DD/MM/YYYY`.
 
 #### Attendance import
 
-The attendance importer supports spreadsheet-style attendance data and converts it into stored work-log information.
-
-### Example CSV files
-
-Examples used in this project:
-
-- `volunteers_import_template_en.csv`
-- `events_import_template_en.csv`
-- `attendance_import_template_en.csv`
+Accepts spreadsheet-style attendance data and converts it into stored work-log records.
 
 ### Example import response
 
@@ -469,6 +477,14 @@ Examples used in this project:
   "skipped": 1
 }
 ```
+
+### Example CSV files
+
+- `volunteers_import_template_en.csv`
+- `events_import_template_en.csv`
+- `attendance_import_template_en.csv`
+
+Real datasets are also included under `datasets/` in the repository.
 
 ---
 
@@ -493,9 +509,9 @@ Return volunteers ranked by total worked hours.
 
 ### `GET /analytics/awards`
 
-Return volunteers grouped by award tier.
+Return volunteers grouped by award tier based on total worked hours.
 
-### Default award tiers
+**Default award tiers**
 
 - `tier_a`: 20 or more hours
 - `tier_b`: 15 to less than 20 hours
@@ -520,7 +536,7 @@ Return volunteers grouped by award tier.
 
 ### `GET /analytics/volunteers/{volunteer_id}/summary`
 
-Return a volunteer summary.
+Return a comprehensive summary for one volunteer.
 
 **Example response**
 
@@ -553,56 +569,37 @@ Return a volunteer summary.
 
 ### `GET /stats`
 
-Return overall totals for the project data.
+Return overall system-wide totals. This endpoint requires authentication. Use the `/dashboard` page to view stats in a browser via JWT token.
 
 **Example response**
 
 ```json
 {
   "total_volunteers": 116,
-  "total_events": 54,
-  "total_shifts": 54,
-  "total_work_logs": 116,
-  "total_worked_minutes": 12000,
-  "total_worked_hours": 200.0
+  "total_events": 108,
+  "total_shifts": 100,
+  "total_work_logs": 383,
+  "total_worked_minutes": 78120,
+  "total_worked_hours": 1302.0
 }
 ```
 
 ---
 
-## Stats
-### `GET /stats`
-
-Return overall totals for the project data.
-
-**Example response**
-
-```json
-{
-  "total_volunteers": 116,
-  "total_events": 54,
-  "total_shifts": 54,
-  "total_work_logs": 116,
-  "total_worked_minutes": 12000,
-  "total_worked_hours": 200.0
-}
-```
---- 
-
 ## Error Codes
 
-Common error responses:
+| Code | Meaning |
+|------|---------|
+| `200 OK` | Successful read or update |
+| `201 Created` | Successful create |
+| `204 No Content` | Successful delete |
+| `400 Bad Request` | Invalid request or business-rule failure |
+| `401 Unauthorized` | Missing or invalid token |
+| `403 Forbidden` | Authenticated but not permitted |
+| `404 Not Found` | Requested resource does not exist |
+| `422 Unprocessable Entity` | Request validation error |
 
-- `200 OK` — successful read/update
-- `201 Created` — successful create
-- `204 No Content` — successful delete
-- `400 Bad Request` — invalid request or business-rule failure
-- `401 Unauthorized` — missing or invalid token
-- `403 Forbidden` — authenticated but not allowed
-- `404 Not Found` — requested resource does not exist
-- `422 Unprocessable Entity` — request validation error
-
-### Example error response
+### Example validation error response
 
 ```json
 {
@@ -618,16 +615,19 @@ Common error responses:
 ```
 
 ### Example resource error response
-```json 
+
+```json
 {
   "detail": "Volunteer not found"
 }
 ```
+
 ---
 
 ## Notes
 
-* The base path `/` may return `404 Not Found`; use `/docs` for the main interactive interface
-* Auth registration currently uses `full_name`
-* Volunteer payload currently uses `name`
-* Analytics are most meaningful after importing data or creating work logs manually
+- The base path `/` returns a homepage — not a 404
+- The admin dashboard at `/dashboard` provides a visual stats view requiring a JWT token
+- Auth registration uses `full_name`; volunteer payload uses `name` — this difference is intentional for compatibility
+- Analytics are most meaningful after importing data or creating work logs manually
+- Import endpoints are admin-protected
