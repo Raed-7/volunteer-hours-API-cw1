@@ -525,7 +525,7 @@ def home() -> str:
                     <h2>Quick Access</h2>
                     <ul>
                         <li><strong>/docs</strong> — interactive Swagger interface</li>
-                        <li><strong>/Dashboard</strong> — admin stats dashboard</li>
+                        <li><strong>/dashboard</strong> — admin stats dashboard</li>
                         <li><strong>/health</strong> — service status check</li>
                     </ul>
                     <p class="footer-note">
