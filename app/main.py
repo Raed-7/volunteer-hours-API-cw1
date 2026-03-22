@@ -22,6 +22,7 @@ app = FastAPI(
     redoc_url=None,
 )
 
+
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     return JSONResponse(
@@ -419,6 +420,17 @@ def home() -> str:
                     display: none;
                 }
             }
+
+                .panel a {
+                    color: #60a5fa;
+                    text-decoration: none;
+                    transition: color 0.15s;
+                }
+
+                .panel a:hover {
+                    color: #93c5fd;
+                    text-decoration: underline;
+                }
         </style>
     </head>
     <body>
@@ -524,9 +536,9 @@ def home() -> str:
                 <aside class="panel">
                     <h2>Quick Access</h2>
                     <ul>
-                        <li><strong>/docs</strong> — interactive Swagger interface</li>
-                        <li><strong>/dashboard</strong> — admin stats dashboard</li>
-                        <li><strong>/health</strong> — service status check</li>
+                        <li><a href="/docs"><strong>/docs</strong></a> &#x2014; interactive Swagger interface</li>
+                        <li><a href="/dashboard"><strong>/dashboard</strong></a> &#x2014; admin stats dashboard</li>
+                        <li><a href="/health"><strong>/health</strong></a> &#x2014; service status check</li>
                     </ul>
                     <p class="footer-note">
                         Tip: start with <code>/docs</code> to explore routes and test the full API.
@@ -583,6 +595,7 @@ def home() -> str:
     </body>
     </html>
     """
+
 
 @app.get("/dashboard", response_class=HTMLResponse, include_in_schema=False)
 def dashboard() -> str:
@@ -759,8 +772,10 @@ def dashboard() -> str:
             }
 
             .stat-card:hover {
-                transform: translateY(-3px);
-                border-color: rgba(59,130,246,0.35);
+                transform: translateY(-5px);
+                border-color: rgba(59,130,246,0.5);
+                box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+                cursor: default;
             }
 
             @keyframes fadeUp {
@@ -785,7 +800,7 @@ def dashboard() -> str:
                 font-weight: 700;
                 letter-spacing: 0.07em;
                 text-transform: uppercase;
-                color: #64748b;
+                color: #94a3b8;
                 margin-bottom: 6px;
             }
 
@@ -799,7 +814,7 @@ def dashboard() -> str:
 
             .stat-sub {
                 font-size: 0.82rem;
-                color: #64748b;
+                color: #94a3b8;
             }
 
             .stat-card.blue  { border-color: rgba(59,130,246,0.25); }
@@ -826,7 +841,46 @@ def dashboard() -> str:
             }
 
             #loaded-at.visible { display: block; }
+
+            .remember-label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 10px;
+                font-size: 0.82rem;
+                color: #64748b;
+                cursor: pointer;
+                font-family: Inter, Arial, sans-serif;
+            }
+
+            .remember-label input {
+                accent-color: #3b82f6;
+                width: 14px;
+                height: 14px;
+                cursor: pointer;
+            }
+
+            .qa-btn {
+                text-decoration: none;
+                padding: 10px 18px;
+                border-radius: 10px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                font-family: Inter, Arial, sans-serif;
+                background: rgba(255,255,255,0.07);
+                border: 1px solid rgba(255,255,255,0.13);
+                color: #e5e7eb;
+                transition: background 0.15s, transform 0.15s;
+            }
+
+            .qa-btn:hover {
+                background: rgba(59,130,246,0.18);
+                border-color: rgba(96,165,250,0.4);
+                transform: translateY(-2px);
+                color: #bfdbfe;
+            }
         </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     </head>
     <body>
         <div class="page">
@@ -859,6 +913,10 @@ def dashboard() -> str:
                     Get your token from <a href="/docs" target="_blank">/docs</a>
                     &rarr; POST /auth/login &rarr; copy the <code>access_token</code> value.
                 </p>
+                <label class="remember-label">
+                    <input type="checkbox" id="remember-toggle" onchange="toggleRemember()" />
+                    Remember token for this session
+                </label>
             </div>
 
             <div id="error-msg" role="alert"></div>
@@ -904,73 +962,172 @@ def dashboard() -> str:
 
             <div id="loaded-at"></div>
 
+            <div id="chart-container" style="display:none; margin-top: 32px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 28px;">
+                <p style="font-size:0.78rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:#94a3b8; margin-bottom:20px; font-family:Inter,Arial,sans-serif;">System Overview</p>
+                <canvas id="statsChart" height="160"></canvas>
+            </div>
+
+            <div id="quick-actions" style="display:none; margin-top: 28px;">
+                <p style="font-size:0.78rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:#64748b; margin-bottom:12px; font-family:Inter,Arial,sans-serif;">Quick Actions</p>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <a href="/docs#/volunteers/create_volunteer_volunteers_post" target="_blank" class="qa-btn">&#x2795; Add Volunteer</a>
+                    <a href="/docs#/imports/import_attendance_imports_attendance_post" target="_blank" class="qa-btn">&#x1F4E5; Import CSV</a>
+                    <a href="/docs#/events/create_event_events_post" target="_blank" class="qa-btn">&#x1F4C5; Create Event</a>
+            </div>
+            </div>
         </div>
 
         <script>
-            // Allow Enter key to trigger load
+        // Restore remembered token from sessionStorage
+        (function() {
+            var saved = sessionStorage.getItem('dashboard-token');
+            if (saved) {
+                document.getElementById('token-field').value = saved;
+                document.getElementById('remember-toggle').checked = true;
+            }
+        }());
+
             document.getElementById('token-field').addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') loadStats();
             });
 
-            async function loadStats() {
-                var token = document.getElementById('token-field').value.trim();
-                var errEl = document.getElementById('error-msg');
-                var grid  = document.getElementById('stats-grid');
-                var btn   = document.getElementById('load-btn');
-                var ts    = document.getElementById('loaded-at');
+        function toggleRemember() {
+            var on = document.getElementById('remember-toggle').checked;
+            if (!on) sessionStorage.removeItem('dashboard-token');
+        }
 
-                errEl.style.display = 'none';
+        async function loadStats() {
+            var token = document.getElementById('token-field').value.trim();
+            var errEl  = document.getElementById('error-msg');
+            var grid   = document.getElementById('stats-grid');
+            var btn    = document.getElementById('load-btn');
+            var ts     = document.getElementById('loaded-at');
+            var qa     = document.getElementById('quick-actions');
 
-                if (!token) {
-                    errEl.textContent = 'Please paste your JWT token before loading.';
-                    errEl.style.display = 'block';
-                    return;
-                }
+        errEl.style.display = 'none';
 
-                btn.disabled = true;
-                btn.textContent = 'Loading...';
+        if (!token) {
+            errEl.textContent = 'Please paste your JWT token before loading.';
+            errEl.style.display = 'block';
+            return;
+        }
 
-                try {
-                    var res = await fetch('/stats', {
-                        headers: { 'Authorization': 'Bearer ' + token }
-                    });
+        // Save to session if checkbox is on
+        if (document.getElementById('remember-toggle').checked) {
+            sessionStorage.setItem('dashboard-token', token);
+        }
 
-                    if (res.status === 401 || res.status === 403) {
-                        throw new Error('Invalid or expired token. Please log in again via /docs.');
-                    }
-                    if (!res.ok) {
-                        throw new Error('Server error (' + res.status + '). Please try again.');
-                    }
+        btn.disabled = true;
+        btn.textContent = 'Loading...';
 
-                    var data = await res.json();
+        try {
+            var res = await fetch('/stats', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
 
-                    document.getElementById('val-volunteers').textContent = data.total_volunteers.toLocaleString();
-                    document.getElementById('val-events').textContent     = data.total_events.toLocaleString();
-                    document.getElementById('val-shifts').textContent     = data.total_shifts.toLocaleString();
-                    document.getElementById('val-logs').textContent       = data.total_work_logs.toLocaleString();
-                    document.getElementById('val-minutes').textContent    = data.total_worked_minutes.toLocaleString();
-                    document.getElementById('val-hours').textContent      = data.total_worked_hours.toLocaleString();
-
-                    grid.classList.add('visible');
-
-                    var now = new Date();
-                    ts.textContent = 'Last loaded: ' + now.toLocaleTimeString();
-                    ts.classList.add('visible');
-
-                } catch (err) {
-                    errEl.textContent = err.message;
-                    errEl.style.display = 'block';
-                    grid.classList.remove('visible');
-                    ts.classList.remove('visible');
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = 'Load Stats';
-                }
+            if (res.status === 401 || res.status === 403) {
+                throw new Error('Invalid or expired token. Please log in again via /docs.');
             }
-        </script>
+            if (!res.ok) {
+                throw new Error('Server error (' + res.status + '). Please try again.');
+            }
+
+            var data = await res.json();
+
+            document.getElementById('val-volunteers').textContent = data.total_volunteers.toLocaleString();
+            document.getElementById('val-events').textContent     = data.total_events.toLocaleString();
+            document.getElementById('val-shifts').textContent     = data.total_shifts.toLocaleString();
+            document.getElementById('val-logs').textContent       = data.total_work_logs.toLocaleString();
+            document.getElementById('val-minutes').textContent    = data.total_worked_minutes.toLocaleString();
+            document.getElementById('val-hours').textContent      = data.total_worked_hours.toLocaleString();
+
+            grid.classList.add('visible');
+                qa.style.display = 'block';
+
+            // Render chart
+            var chartContainer = document.getElementById('chart-container');
+                chartContainer.style.display = 'block';
+
+            var ctx = document.getElementById('statsChart').getContext('2d');
+
+            // Destroy previous chart instance if exists
+            if (window._statsChart) window._statsChart.destroy();
+
+        window._statsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: ['Volunteers', 'Events', 'Shifts', 'Work Logs'],
+        datasets: [{
+            label: 'Count',
+            data: [
+                data.total_volunteers,
+                data.total_events,
+                data.total_shifts,
+                data.total_work_logs
+            ],
+            backgroundColor: [
+                'rgba(59, 130, 246, 0.7)',
+                'rgba(168, 85, 247, 0.7)',
+                'rgba(245, 158, 11, 0.7)',
+                'rgba(20, 184, 166, 0.7)'
+            ],
+            borderColor: [
+                'rgba(59, 130, 246, 1)',
+                'rgba(168, 85, 247, 1)',
+                'rgba(245, 158, 11, 1)',
+                'rgba(20, 184, 166, 1)'
+            ],
+            borderWidth: 1.5,
+            borderRadius: 8,
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: 'rgba(15,23,42,0.95)',
+                titleColor: '#e5e7eb',
+                bodyColor: '#94a3b8',
+                padding: 12,
+                cornerRadius: 8,
+            }
+        },
+        scales: {
+            x: {
+                grid: { color: 'rgba(255,255,255,0.05)' },
+                ticks: { color: '#94a3b8', font: { family: 'Inter, Arial, sans-serif', size: 12 } }
+            },
+            y: {
+                grid: { color: 'rgba(255,255,255,0.05)' },
+                ticks: { color: '#94a3b8', font: { family: 'Inter, Arial, sans-serif', size: 11 } },
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+            var now = new Date();
+            ts.textContent = 'Last loaded: ' + now.toLocaleTimeString();
+            ts.classList.add('visible');
+
+        } catch (err) {
+            errEl.textContent = err.message;
+            errEl.style.display = 'block';
+            grid.classList.remove('visible');
+            qa.style.display = 'none';
+            ts.classList.remove('visible');
+            document.getElementById('chart-container').style.display = 'none';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Load Stats';
+        }
+    }
+</script>
     </body>
     </html>
     """
+
 
 @app.get("/docs", include_in_schema=False)
 def custom_swagger_ui():
